@@ -1,0 +1,224 @@
+<div class="page-header single-event-page-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <header class="entry-header">
+          <h4 class="entry-title" style="font-size: 41px;">{{ eventData[0].name }}</h4>
+        </header>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-12 single-event">
+      <div class="event-content-wrap">
+        <header class="entry-header flex flex-wrap justify-content-between align-items-end">
+          <div class="single-event-heading">
+            <h2 class="entry-title">{{ eventData[0].actor }}</h2>
+
+            <div class="event-location"><a href="#">{{ eventData[0].name }}</a></div>
+
+            <div class="event-date">{{ eventData[0].startDate }}</div>
+          </div>
+        </header>
+
+        <figure class="events-thumbnail">
+          <img src="../../../assets/images/summer.jpg" alt="">
+        </figure>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="tabs">
+        <ul class="tabs-nav flex">
+          <li class="tab-nav flex justify-content-center align-items-center" data-target="#tab_details">Details</li>
+          <li class="tab-nav flex justify-content-center align-items-center" data-target="#tab_venue">Venue</li>
+          <li class="tab-nav flex justify-content-center align-items-center" data-target="#tab_organizers">Terms &
+            Conditions</li>
+        </ul>
+
+        <div class="tabs-container">
+          <div id="tab_details" class="tab-content">
+            <div class="flex flex-wrap justify-content-between">
+              <div class="single-event-details">
+                <div class="single-event-details-row">
+                  <label>Start:</label>
+                  <p>{{ eventData[0].startDate }}</p>
+                </div>
+                <div class="single-event-details-row">
+                  <label>Price:</label>
+                  <p>{{ eventData[0].price }}</p>
+                </div>
+
+                <div class="single-event-details-row">
+                  <label>Categories:</label>
+                  <p>{{ eventData[0].category }}</p>
+                </div>
+
+                <div class="single-event-details-row">
+                  <label>Tags:</label>
+                  <p>
+                    {{ eventData[0].tags }}
+                  </p>
+                </div>
+              </div>
+
+              <div class="single-event-map">
+
+                <!-- <iframe id="gmap_canvas" src="https://www.google.com/maps/embed?origin=mfe&pb=!1m3!2m1!1suniversity+of+san+francisco!6i15" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe> -->
+                <iframe id="gmap_canvas"
+                  src="https://maps.google.com/maps?q=BKC Bandra east mumbai&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                  frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+              </div>
+            </div>
+          </div>
+
+          <div id="tab_venue" class="tab-content">
+            <!-- <p>Jio Garden, BKC, Mumbai.</p> -->
+            <p> {{ eventData[0].location }}</p>
+          </div>
+
+          <div id="tab_organizers" class="tab-content">
+            <ul *ngFor="let item of eventData[0].termsandcondition">
+              <li>{{ item.Name }}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <!-- <div class="event-tickets"> -->
+
+      <div class="contact-form">
+        <h2 style="text-align: center;">
+          Register for event
+        </h2>
+        <form class="row" [formGroup]="profileForm" (ngSubmit)="generateQRCode()">
+          <div class="col-12">
+            <input type="text" formControlName="Name" placeholder="Name">
+          </div>
+          <div class="col-12">
+            <input type="text" formControlName="MobileNumber" placeholder="Mobile">
+          </div>
+          <div class="col-12">
+            <input type="email" formControlName="EmailId" placeholder="E-mail">
+          </div>
+          <div class="col-12">
+            <textarea placeholder="Address" formControlName="Address" rows="4"></textarea>
+          </div>
+          <div class="col-12">
+            <!-- <input type="text" formControlName="Seats" placeholder="seats"> -->
+
+            <span class="lblSpan">Select Seats:</span>
+            <select placeholder="seats" formControlName="Seats" class="inputSelect">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="1">5</option>
+              <option value="2">6</option>
+              <option value="3">7</option>
+              <option value="4">8</option>
+              <option value="3">9</option>
+              <option value="4">10</option>
+            </select>
+
+
+          </div>
+          <!-- <input type="submit" class="btn gradient-bg" value="Buy Ticket"> -->
+          <!-- <button type="submit" style="text-align: center;" class="btn gradient-bg"
+            [disabled]="!profileForm.valid">Submit</button> -->
+            <button type="submit" style="text-align: center;" class="btn gradient-bg"
+            >Submit</button>
+         
+          <a [href]="href" *ngIf="display" (click)="downloadImage()" download>Download E-Ticket</a>
+        </form>
+      </div>
+      <ngx-qrcode *ngIf="display" id="qrCodeImage" [qrc-element-type]="elementType" [qrc-value]="value">
+    </ngx-qrcode><br>
+      <!-- </div> -->
+    </div>
+  </div>
+
+  <br />
+
+  <div class="row">
+    <div class="col-12">
+      <div class="upcoming-events">
+        <div class="upcoming-events-header">
+          <h4>Upcoming Events</h4>
+        </div>
+
+
+      </div>
+      <div class="row events-list">
+        <div class="col-12 col-lg-6 single-event" *ngFor="let item of upcommingevents">
+          <figure class="events-thumbnail">
+            <a href="#"><img src="{{ item.Image }}" alt=""></a>
+          </figure>
+
+          <div class="event-content-wrap">
+            <header class="entry-header flex justify-content-between">
+              <div>
+                <h2 class="entry-title"><a href="#">{{ item.Title }}</a></h2>
+
+                <div class="event-location"><a href="#">{{ item.SubTitle }}</a></div>
+
+                <div class="event-date">{{ item.StartDate }} - {{ item.EndDate }}</div>
+              </div>
+
+              <div class="event-cost flex justify-content-center align-items-center">
+                from<span>
+                  {{ item.Price }}
+                </span>
+              </div>
+            </header>
+
+            <footer class="entry-footer">
+              <a href="#">Buy Tikets</a>
+            </footer>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+</div>
+
+<div class="newsletter-subscribe">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <header class="entry-header">
+          <h2 class="entry-title">Subscribe to our newsletter to get the latest trends & news</h2>
+          <p>Join our database NOW!</p>
+        </header>
+
+        <div class="newsletter-form">
+          <form class="flex flex-wrap justify-content-center align-items-center">
+            <div class="col-md-12 col-lg-3">
+              <input type="text" placeholder="Name">
+            </div>
+
+            <div class="col-md-12 col-lg-6">
+              <input type="email" placeholder="Your e-mail">
+            </div>
+
+            <div class="col-md-12 col-lg-3">
+              <input class="btn gradient-bg" type="submit" value="Subscribe">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
