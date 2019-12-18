@@ -8,6 +8,7 @@ import { PyticketService } from 'src/app/service/pyticket.service';
 import { FormGroup, FormControl,Validators } from '@angular/forms';
 import htmlToImage from 'html-to-image';
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+declare var $: any;
 
 @Component({
   selector: 'app-events',
@@ -28,10 +29,6 @@ export class EventsComponent implements OnInit {
   id: string;
   profileForm: FormGroup;
 
-  count = 1;
-  max: number;
-  min: number;
-
 
   constructor(
     private matDialog: MatDialog,
@@ -44,14 +41,14 @@ export class EventsComponent implements OnInit {
       MobileNumber: new FormControl('9960097184', Validators.required),
       Address: new FormControl('Chakala NAdheri', Validators.required),
       idnumber: new FormControl('23422424242', Validators.required),
-      Quantity :new FormControl('10', Validators.required),
+      documentIdType :new FormControl('Pancard', Validators.required),
+      Quantity :new FormControl('1', Validators.required),
     });
     // console.log('Log::', router.url );//+ this.route.snapshot.paramMap.get('id'));
   }
 
   ngOnInit() {
-    this.max = this.count + 1;
-    this.min = this.count - 1;
+    $('[data-toggle="tooltip"]').tooltip();   
     this.route.paramMap.subscribe(params => {
       // this.id = params.get("id")
       // console.log('params:', JSON.stringify(params))
@@ -59,20 +56,6 @@ export class EventsComponent implements OnInit {
     // console.log('dada', this.id);
     this.initialize();
   }
-
-  increment() {
-    if (this.count >= this.max) {
-      return;
-    }
-    this.count++;
-  };
-
-  decrement() {
-    if (this.count <= this.min) {
-      return;
-    }
-    this.count--;
-  };
 
   downloadImage() {
     htmlToImage.toJpeg(document.getElementById('my-node'), {
