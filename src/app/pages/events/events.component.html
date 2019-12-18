@@ -1,31 +1,236 @@
-<div class="page-header single-event-page-header">
+<div class="hero-wrap" style="background-image: url('../../../assets/images/bg_2.jpg');">
+  <div class="overlay"></div>
   <div class="container">
-    <div class="row">
-      <div class="col-12">
-        <header class="entry-header">
-          <h4 class="entry-title" style="font-size: 41px;">{{ eventData[0].name }}</h4>
-        </header>
+    <div class="row no-gutters slider-text align-items-center justify-content-start">
+      <div class="col-lg-6 col-md-6 ftco-animate">
+        <h1 class="mb-4"> {{ eventData[0].title }}
+          <br><span>{{ eventData[0].eventDescription }}</span></h1>
+        <p class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span
+            class="icon-calendar mr-2"></span>{{ eventData[0].startDate  }}  - {{ eventData[0].endDate  }}</p>
+        <div id="timer" class="d-flex">
+          <div class="time" id="days"></div>
+          <div class="time pl-3" id="hours"></div>
+          <div class="time pl-3" id="minutes"></div>
+          <div class="time pl-3" id="seconds"></div>
+        </div>
+      </div>
+      <div class="col-lg-2 col"></div>
+      <div class="col-lg-4 col-md-6 mt-0 mt-md-5">
+        <form [formGroup]="profileForm" (ngSubmit)="generateQRCode()" class="request-form ftco-animate">
+          <h2>Join Event</h2>
+          <div class="form-group">
+            <input type="text" class="form-control" formControlName="Name" placeholder="Enter your Full Name">
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" formControlName="EmailId" placeholder="Enter your Email">
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" formControlName="MobileNumber" placeholder="Enter your Phone">
+          </div>
+          <div class="form-group">
+            <!-- <input type="text" class="form-control" placeholder="Enter your Phone"> -->
+            <div class="row">
+              <div class="col-6">
+                <select  class="form-control">
+                  <option value="default">-- Select a Id Proof --</option>
+                  <option>Pancard.</option>
+                  <option>Adhar</option>
+                  <option>Driving License</option>
+                </select>
+              </div>
+              <div class="col-6">
+                <input type="text" class="form-control" formControlName="idnumber" placeholder="Id number">
+              </div>
+            </div>
+          </div>
+          <!-- <div class="form-group">
+            <input type="text" class="form-control" placeholder="Enter your Phone">
+          </div> -->
+          <div class="col-lg-12">
+            <div class="row">
+              <h4 class="col-lg-4">Seats :</h4>
+              <div class="col-lg-8">
+                <div class="input-group">
+                  <span class="input-group-btn">
+                    <button type="button" (click)="decrement()" class="btn btn-danger btn-number">
+                      <span class="glyphicon glyphicon-minus"></span>
+                    </button>
+                  </span>
+                  <input type="text" formControlName="Quantity" class="form-control input-number" value="{{count}}">
+                  <span class="input-group-btn">
+                    <button type="button" (click)="increment()" class="btn btn-success btn-number">
+                      <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <!-- <div class="col-lg-12 text-center mt-3"><button type="submit" style="text-align: center;"
+              class="btn gradient-bg" [disabled]="!profileForm.valid">Submit</button></div> -->
+          <button type="submit" style="text-align: center;" *ngIf="display" (click)="downloadImage()"
+            class="btn gradient-bg">Download E-Ticket</button>
+          <div class="form-group">
+            <div class="checkbox">
+              <label><input type="checkbox" value="" class="mr-2"> I have read and accept the terms and
+                conditions</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <input type="submit" [disabled]="!profileForm.valid" value="Book now" class="btn btn-primary py-3 px-4">
+          </div>
+        </form>
       </div>
     </div>
   </div>
 </div>
-<div class="container">
+
+<section class="ftco-section services-section bg-primary">
+  <div class="container">
+    <div class="row d-flex">
+      <div class="col-md-6 d-flex align-self-stretch ftco-animate">
+        <div class="media block-6 services d-block">
+          <div class="icon"><span class="flaticon-placeholder"></span></div>
+          <div class="media-body">
+            <h3 class="heading mb-3">Venue</h3>
+            <p> {{ eventData[0].address }} , {{ eventData[0].city }} , {{ eventData[0].state }}
+              {{ eventData[0].country }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="container" *ngIf="display" id="my-node" style="background-color: #ffff;">
   <div class="row">
+    <div class="col-xs-12">
+      <div class="invoice-title">
+        <h2>Invoice</h2>
+        <h3 class="pull-right">Order #12345</h3>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-xs-6">
+          <address>
+            <strong>Billed To:</strong><br>
+            John Smith<br>
+            1234 Main<br>
+            Apt. 4B<br>
+            Springfield, ST 54321
+          </address>
+        </div>
+        <div class="col-xs-6 text-right">
+          <address>
+            <strong>To:</strong><br>
+            Jane Smith<br>
+            1234 Main<br>
+            Apt. 4B<br>
+            Springfield, ST 54321
+          </address>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6">
+          <address>
+            <strong>Payment Method:</strong><br>
+            Visa ending **** 4242<br>
+            jsmith@email.com
+          </address>
+        </div>
+        <div class="col-xs-6 text-right">
+          <address>
+            <strong>Order Date:</strong><br>
+            December 11, 2019<br><br>
+          </address>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title"><strong>Order summary</strong></h3>
+        </div>
+        <div class="panel-body">
+          <div class="table-responsive">
+            <table class="table table-condensed">
+              <thead>
+                <tr>
+                  <td><strong>Item</strong></td>
+                  <td class="text-center"><strong>Price</strong></td>
+                  <td class="text-center"><strong>Quantity</strong></td>
+                  <td class="text-right"><strong>Totals</strong></td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>BS-200</td>
+                  <td class="text-center">$10.99</td>
+                  <td class="text-center">1</td>
+                  <td class="text-right">$10.99</td>
+                </tr>
+                <tr>
+                  <td>BS-400</td>
+                  <td class="text-center">$20.00</td>
+                  <td class="text-center">3</td>
+                  <td class="text-right">$60.00</td>
+                </tr>
+                <tr>
+                  <td>BS-1000</td>
+                  <td class="text-center">$600.00</td>
+                  <td class="text-center">1</td>
+                  <td class="text-right">$600.00</td>
+                </tr>
+                <tr>
+                  <td class="thick-line"></td>
+                  <td class="thick-line"></td>
+                  <td class="thick-line text-center"><strong>Subtotal</strong></td>
+                  <td class="thick-line text-right">$670.99</td>
+                </tr>
+
+                <tr>
+                  <td class="no-line"></td>
+                  <td class="no-line"></td>
+                  <td class="no-line text-center"><strong>Total</strong></td>
+                  <td class="no-line text-right">$685.99</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+
+
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-12 text-center mt-3">
+    <ngx-qrcode id="qrCodeImage" [qrc-element-type]="elementType" [qrc-value]="value | json">
+      <p>Ticket Id: KKBK000063</p>
+    </ngx-qrcode>
+
+  </div>
+</div>
+
+
+<!-- <div class="container">
+  <div class="row">
+    <h4 class="entry-title" style="font-size: 41px;">{{ eventData[0].eventDescription }}</h4>
     <div class="col-12 single-event">
       <div class="event-content-wrap">
         <header class="entry-header flex flex-wrap justify-content-between align-items-end">
           <div class="single-event-heading">
             <h2 class="entry-title">{{ eventData[0].actor }}</h2>
-
-            <div class="event-location"><a href="#">{{ eventData[0].name }}</a></div>
+            <div class="event-location"><a href="#">{{ eventData[0].title }}</a></div>
 
             <div class="event-date">{{ eventData[0].startDate }}</div>
           </div>
         </header>
-
-        <figure class="events-thumbnail">
-          <img src="../../../assets/images/summer.jpg" alt="">
-        </figure>
       </div>
     </div>
   </div>
@@ -46,29 +251,20 @@
               <div class="single-event-details">
                 <div class="single-event-details-row">
                   <label>Start:</label>
-                  <p>{{ eventData[0].startDate }}</p>
+                  <p>{{ eventData[0].startDate | date : format : timezone }}</p>
                 </div>
                 <div class="single-event-details-row">
-                  <label>Price:</label>
-                  <p>{{ eventData[0].price }}</p>
+                  <label>End Date:</label>
+                  <p>{{ eventData[0].endDate | date : format : timezone }}</p>
                 </div>
 
                 <div class="single-event-details-row">
                   <label>Categories:</label>
-                  <p>{{ eventData[0].category }}</p>
-                </div>
-
-                <div class="single-event-details-row">
-                  <label>Tags:</label>
-                  <p>
-                    {{ eventData[0].tags }}
-                  </p>
+                  <p>{{ eventData[0].eventCategory }}</p>
                 </div>
               </div>
 
               <div class="single-event-map">
-
-                <!-- <iframe id="gmap_canvas" src="https://www.google.com/maps/embed?origin=mfe&pb=!1m3!2m1!1suniversity+of+san+francisco!6i15" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe> -->
                 <iframe id="gmap_canvas"
                   src="https://maps.google.com/maps?q=BKC Bandra east mumbai&t=&z=15&ie=UTF8&iwloc=&output=embed"
                   frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
@@ -77,8 +273,8 @@
           </div>
 
           <div id="tab_venue" class="tab-content">
-            <!-- <p>Jio Garden, BKC, Mumbai.</p> -->
-            <p> {{ eventData[0].location }}</p>
+            <p> {{ eventData[0].address }} , {{ eventData[0].city }} , {{ eventData[0].state }}
+              {{ eventData[0].country }}</p>
           </div>
 
           <div id="tab_organizers" class="tab-content">
@@ -91,110 +287,187 @@
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-12">
-      <!-- <div class="event-tickets"> -->
+  <div class="contact-form">
+    <h2 style="text-align: center;">
+      Register for event
+    </h2>
+    <form class="row" [formGroup]="profileForm" (ngSubmit)="generateQRCode()">
+      <div class="col-12">
+        <input type="text" formControlName="Name" placeholder="Name">
+      </div>
+      <div class="col-12">
+        <input type="text" formControlName="MobileNumber" placeholder="Mobile">
+      </div>
+      <div class="col-12">
+        <input type="email" formControlName="EmailId" placeholder="E-mail">
+      </div>
+      <div class="col-lg-12">
+        <div class="row">
+          <div class="col-4">
+            Select Id Proof
+          </div>
+          <div class="col-4">
 
-      <div class="contact-form">
-        <h2 style="text-align: center;">
-          Register for event
-        </h2>
-        <form class="row" [formGroup]="profileForm" (ngSubmit)="generateQRCode()">
-          <div class="col-12">
-            <input type="text" formControlName="Name" placeholder="Name">
-          </div>
-          <div class="col-12">
-            <input type="text" formControlName="MobileNumber" placeholder="Mobile">
-          </div>
-          <div class="col-12">
-            <input type="email" formControlName="EmailId" placeholder="E-mail">
-          </div>
-          <div class="col-12">
-            <textarea placeholder="Address" formControlName="Address" rows="4"></textarea>
-          </div>
-          <div class="col-12">
-            <!-- <input type="text" formControlName="Seats" placeholder="seats"> -->
-
-            <span class="lblSpan">Select Seats:</span>
-            <select placeholder="seats" formControlName="Seats" class="inputSelect">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="1">5</option>
-              <option value="2">6</option>
-              <option value="3">7</option>
-              <option value="4">8</option>
-              <option value="3">9</option>
-              <option value="4">10</option>
+            <select class="form-control">
+              <option value="default">-- Select a Id Proof --</option>
+              <option>Pancard.</option>
+              <option>Adhar</option>
+              <option>Driving License</option>
             </select>
-
-
           </div>
-          <!-- <input type="submit" class="btn gradient-bg" value="Buy Ticket"> -->
-          <!-- <button type="submit" style="text-align: center;" class="btn gradient-bg"
-            [disabled]="!profileForm.valid">Submit</button> -->
-            <button type="submit" style="text-align: center;" class="btn gradient-bg"
-            >Submit</button>
-         
-          <a [href]="href" *ngIf="display" (click)="downloadImage()" download>Download E-Ticket</a>
-        </form>
+
+          <div class="col-4">
+            <input type="text" formControlName="Address" placeholder="Id number">
+          </div>
+        </div>
       </div>
-      <ngx-qrcode *ngIf="display" id="qrCodeImage" [qrc-element-type]="elementType" [qrc-value]="value">
-    </ngx-qrcode><br>
-      <!-- </div> -->
-    </div>
+
+      <div class="col-lg-12">
+        <div class="row">
+          <h4 class="col-lg-4">Seats :</h4>
+          <div class="col-lg-8">
+            <div class="input-group">
+              <span class="input-group-btn">
+                <button type="button" (click)="decrement()" class="btn btn-danger btn-number">
+                  <span class="glyphicon glyphicon-minus"></span>
+                </button>
+              </span>
+              <input type="text" formControlName="Quantity" class="form-control input-number" value="{{count}}">
+              <span class="input-group-btn">
+                <button type="button" (click)="increment()" class="btn btn-success btn-number">
+                  <span class="glyphicon glyphicon-plus"></span>
+                </button>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="col-lg-12 text-center mt-3"><button type="submit" style="text-align: center;" class="btn gradient-bg"
+          [disabled]="!profileForm.valid">Submit</button></div>
+      <button type="submit" style="text-align: center;" *ngIf="display" (click)="downloadImage()"
+        class="btn gradient-bg">Download E-Ticket</button>
+    </form>
   </div>
 
+  <div class="container" *ngIf="display" id="my-node" style="background-color: #ffff;">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="invoice-title">
+          <h2>Invoice</h2>
+          <h3 class="pull-right">Order #12345</h3>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-xs-6">
+            <address>
+              <strong>Billed To:</strong><br>
+              John Smith<br>
+              1234 Main<br>
+              Apt. 4B<br>
+              Springfield, ST 54321
+            </address>
+          </div>
+          <div class="col-xs-6 text-right">
+            <address>
+              <strong>To:</strong><br>
+              Jane Smith<br>
+              1234 Main<br>
+              Apt. 4B<br>
+              Springfield, ST 54321
+            </address>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-6">
+            <address>
+              <strong>Payment Method:</strong><br>
+              Visa ending **** 4242<br>
+              jsmith@email.com
+            </address>
+          </div>
+          <div class="col-xs-6 text-right">
+            <address>
+              <strong>Order Date:</strong><br>
+              December 11, 2019<br><br>
+            </address>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title"><strong>Order summary</strong></h3>
+          </div>
+          <div class="panel-body">
+            <div class="table-responsive">
+              <table class="table table-condensed">
+                <thead>
+                  <tr>
+                    <td><strong>Item</strong></td>
+                    <td class="text-center"><strong>Price</strong></td>
+                    <td class="text-center"><strong>Quantity</strong></td>
+                    <td class="text-right"><strong>Totals</strong></td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>BS-200</td>
+                    <td class="text-center">$10.99</td>
+                    <td class="text-center">1</td>
+                    <td class="text-right">$10.99</td>
+                  </tr>
+                  <tr>
+                    <td>BS-400</td>
+                    <td class="text-center">$20.00</td>
+                    <td class="text-center">3</td>
+                    <td class="text-right">$60.00</td>
+                  </tr>
+                  <tr>
+                    <td>BS-1000</td>
+                    <td class="text-center">$600.00</td>
+                    <td class="text-center">1</td>
+                    <td class="text-right">$600.00</td>
+                  </tr>
+                  <tr>
+                    <td class="thick-line"></td>
+                    <td class="thick-line"></td>
+                    <td class="thick-line text-center"><strong>Subtotal</strong></td>
+                    <td class="thick-line text-right">$670.99</td>
+                  </tr>
+
+                  <tr>
+                    <td class="no-line"></td>
+                    <td class="no-line"></td>
+                    <td class="no-line text-center"><strong>Total</strong></td>
+                    <td class="no-line text-right">$685.99</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+
+
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-12 text-center mt-3">
+      <ngx-qrcode id="qrCodeImage" [qrc-element-type]="elementType" [qrc-value]="value | json">
+        <p>Ticket Id: KKBK000063</p>
+      </ngx-qrcode>
+
+    </div>
+  </div>
   <br />
+</div> -->
 
-  <div class="row">
-    <div class="col-12">
-      <div class="upcoming-events">
-        <div class="upcoming-events-header">
-          <h4>Upcoming Events</h4>
-        </div>
-
-
-      </div>
-      <div class="row events-list">
-        <div class="col-12 col-lg-6 single-event" *ngFor="let item of upcommingevents">
-          <figure class="events-thumbnail">
-            <a href="#"><img src="{{ item.Image }}" alt=""></a>
-          </figure>
-
-          <div class="event-content-wrap">
-            <header class="entry-header flex justify-content-between">
-              <div>
-                <h2 class="entry-title"><a href="#">{{ item.Title }}</a></h2>
-
-                <div class="event-location"><a href="#">{{ item.SubTitle }}</a></div>
-
-                <div class="event-date">{{ item.StartDate }} - {{ item.EndDate }}</div>
-              </div>
-
-              <div class="event-cost flex justify-content-center align-items-center">
-                from<span>
-                  {{ item.Price }}
-                </span>
-              </div>
-            </header>
-
-            <footer class="entry-footer">
-              <a href="#">Buy Tikets</a>
-            </footer>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-
-
-</div>
-
-<div class="newsletter-subscribe">
+<!-- <div class="newsletter-subscribe">
   <div class="container">
     <div class="row">
       <div class="col-12">
@@ -221,4 +494,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->

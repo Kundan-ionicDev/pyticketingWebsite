@@ -1,0 +1,15 @@
+/* You can add global styles to this file, and also import other style files */
+.btn {
+    padding: 4px 30px;
+}
+.form-control{
+    margin-bottom: 0 !important;
+    height: auto;
+}
+input[type=number] { 
+    -moz-appearance: textfield;
+    appearance: textfield;
+    margin: 0; 
+  }
+
+  

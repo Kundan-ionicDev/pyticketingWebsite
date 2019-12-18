@@ -7,7 +7,7 @@ import { catchError, tap, map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class PyticketService {
-  apiURL: string = "http://localhost:3000/api/";
+  apiURL: string = "http://localhost:8000/api/";
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
@@ -32,7 +32,7 @@ export class PyticketService {
 
   // Calling GET Method's
   _getAPI(methodname: string): Observable < any > {
-    return this.http.get < any > ('', this.httpOptions).pipe(
+    return this.http.get <any> (this.apiURL + methodname, this.httpOptions).pipe(
       tap(_ => this.log(methodname)),
       catchError(this.handleError('login', []))
     );
