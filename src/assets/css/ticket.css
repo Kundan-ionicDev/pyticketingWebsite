@@ -1,42 +1,4 @@
-<div #content id="content">
-  <section class="container">
-    <h1>Events</h1>
-    <div class="row">
-      <article class="card fl-left">
-        <section class="date">
-          <time datetime="23th feb">
-            <span>{{ data.StartDate | date:'dd' }}</span><span>{{ data.StartDate | date:'MMM' }}</span>
-          </time>
-        </section>
-        <section class="card-cont">
-          <small>{{ data.Name }}</small>
-          <h2>{{ data.EventName }}</h2>
-          <h3>{{ data.EventDescription }}</h3>
-          <div class="even-date">
-            <i class="fa fa-calendar"></i>
-            <time>
-              <span>{{ data.StartDate | date }}  - {{ data.EndDate | date }}</span>
-              <span>{{ data.StartDate | date:'h:mm a' }}  - {{ data.EndDate | date:'h:mm a' }}</span>
-            </time>
-          </div>
-          <div class="even-info">
-            <i class="fa fa-map-marker"></i>
-            <p>
-              {{ data.Address }}
-            </p>
-          </div>
-        </section>
-        <section class="card-cont">
-          <ngx-qrcode [qrc-element-type]="elementType" [qrc-value]="data.QrCodeValue | json">
-          </ngx-qrcode>
-          <a *ngIf="display" (click)="downloadImage()" download>Download</a>
-        </section>
-      </article>
-    </div>
-  </section>
 
-
-  <style type="text/css">
     @import url('https://fonts.googleapis.com/css?family=Oswald');
 
     * {
@@ -236,6 +198,3 @@
         font-size: 75%
       }
     }
-
-  </style>
-</div>

@@ -66,3 +66,7 @@ input[type="number"] {
     font-weight: bold;
     text-align: center;
   }
+
+  select.form-control:not([size]):not([multiple]){
+    height: auto;
+  } 

@@ -28,33 +28,39 @@ export class EventsComponent implements OnInit {
   upcommingevents: {} [];
   id: string;
   profileForm: FormGroup;
-
-
+  ticket: number = 1;
+  
   constructor(
     private matDialog: MatDialog,
     private route: ActivatedRoute,
     public router: Router,
     public api: PyticketService) {
-    this.profileForm = new FormGroup({
-      Name: new FormControl('Kundan Sakpal', Validators.required),
-      EmailId: new FormControl('kundan@sp.com', Validators.required),
-      MobileNumber: new FormControl('9960097184', Validators.required),
-      Address: new FormControl('Chakala NAdheri', Validators.required),
-      idnumber: new FormControl('23422424242', Validators.required),
-      documentIdType :new FormControl('Pancard', Validators.required),
-      Quantity :new FormControl('1', Validators.required),
-    });
+      this.route.paramMap.subscribe(params => {
+        this.id = params.get("id")
+        // console.log('params1111:', JSON.stringify(params))
+      });
+      // console.log('dada1111', this.id);
+
+      this.initialize(this.id);
+      this.profileForm = new FormGroup({
+        Name: new FormControl('Kundan Sakpal', Validators.required),
+        EmailId: new FormControl('kundan@sp.com', Validators.required),
+        MobileNumber: new FormControl('9960097184', Validators.required),
+        Address: new FormControl('Chakala NAdheri', Validators.required),
+        idnumber: new FormControl('DCBPS8353E', Validators.required),
+        documentIdType :new FormControl('PANCARD', Validators.required),
+        Quantity :new FormControl(1, Validators.required),
+      });
     // console.log('Log::', router.url );//+ this.route.snapshot.paramMap.get('id'));
   }
 
   ngOnInit() {
     $('[data-toggle="tooltip"]').tooltip();   
     this.route.paramMap.subscribe(params => {
-      // this.id = params.get("id")
+      this.id = params.get("id")
       // console.log('params:', JSON.stringify(params))
     });
     // console.log('dada', this.id);
-    this.initialize();
   }
 
   downloadImage() {
@@ -71,16 +77,22 @@ export class EventsComponent implements OnInit {
   }
 
   generateQRCode() {
+    
+    // var result = document.getElementById("ticket").value;
+    // alert('quantity' + result);
+    console.log('dddd', this.profileForm.value);
     if (this.profileForm.valid) {
-      let params = {
-        "Name": this.profileForm.value.Name,
-        "MobileNumber": this.profileForm.value.MobileNumber,
-        "EmailId": this.profileForm.value.EmailId,
-        "Address": this.profileForm.value.Address,
-        "Quantity": 3
+      let params ={
+        "totalTickets": this.profileForm.value.Quantity,
+         "eventId": this.id,
+         "name": this.profileForm.value.Name,
+         "email": "24@gmail.com",//this.profileForm.value.EmailId,
+         "docType": this.profileForm.value.documentIdType,
+         "docId": this.profileForm.value.idnumber
       };
-      console.log('params:', this.profileForm);
-      this.api._postAPI('registerforevent', params).pipe(
+
+      // console.log('params:', this.profileForm);
+      this.api._postAPI('event/book', params).pipe(
           catchError(err => {
             // alert('Handling error locally and rethrowing it...'+ JSON.stringify(err));
             return throwError(err);
@@ -90,35 +102,55 @@ export class EventsComponent implements OnInit {
           res => {
             // alert('HTTP response'+ JSON.stringify(res));
             //  $("#content").show();
-            if (res.StatusCode == 200) {
+            if (res.status == 200) {
               if (this.qrcodename == '') {
                 this.display = false;
-                alert("Please enter the name");
+                // alert("Please enter the name");
                 return;
               } else {
                 // this.value = this.qrcodename + res._id;
-
                 this.value = [{
-                  "Name": this.profileForm.value.Name,
-                  "TicketId": res.Data._id,
-                  "EventId": '5dee34ec0cfdee0d0d85e602'
+                  "UserId": res.data.userId,
+                  "TicketId": res.data.bookingId,
+                  "EventId": res.data.eventId,
                 }];
-                this.display = true;
+                // this.display = true;
+                const dialogRef = this.matDialog.open(EventTicketDialog, {
+                  data: 
+                  {
+                    "Name": this.profileForm.value.Name,
+                    "EventName": this.eventData[0].title,
+                    "EventDescription": this.eventData[0].eventDescription,
+                    "StartDate": this.eventData[0].startDate,
+                    "EndDate": this.eventData[0].endDate,
+                    "Address":this.eventData[0].address,
+                    "TicketId": res.data.bookingId,
+                    "EventId": res.data.eventId,
+                    "QrCodeValue":this.value
+                  },
+                  width: '800px',
+                  hasBackdrop: true,
+                  autoFocus : false
+                });
+               
+               
+                dialogRef.afterClosed().subscribe(result => {
+                  this.value = result;
+                });
+            
               }
             } else {
-              // alert('Error' + res.Message)
+              alert('Error!!!' + res.message)
             }
-            const dialogRef = this.matDialog.open(EventTicketDialog, {
-              // data: this.value,
-              width: '1200px',
-              hasBackdrop: true,
-              autoFocus : false
-            });
-           
-           
-            dialogRef.afterClosed().subscribe(result => {
-              this.value = result;
-            });
+            // const dialogRef = this.matDialog.open(EventTicketDialog, {
+            //   // data: this.value,
+            //   width: '600px',
+            //   hasBackdrop: true,
+            //   autoFocus : false
+            // });
+            // dialogRef.afterClosed().subscribe(result => {
+            //   this.value = result;
+            // });
           },
           err => {
             if (err.length > 0) {
@@ -132,10 +164,10 @@ export class EventsComponent implements OnInit {
 
   }
 
-  initialize() {
+  initialize(eventId:any) {
     // Assign a value
     this.myAngularxQrCode = 'http://www.pyticketing.com/events/arjitsingh.html';
-    this.api._getAPI('event/list?eventId=a1dce4bba7f410445291aa88382c50').pipe(
+    this.api._getAPI('event/list?eventId='+eventId+'').pipe(
         catchError(err => {
           // alert('Handling error locally and rethrowing it...'+ JSON.stringify(err));
           return throwError(err);
@@ -143,6 +175,7 @@ export class EventsComponent implements OnInit {
       )
       .subscribe(
         res => {
+          // alert('data' + JSON.stringify(res));
           if (res.status == 200) {
             this.eventData = res.data;
           } else {
@@ -163,27 +196,43 @@ export class EventsComponent implements OnInit {
   templateUrl: './eventticket-dialog.html',
 })
 export class EventTicketDialog {
-  qrcodename: string = "https://insider.in/arijit-singh-live-in-mumbai-one-night-only-sign-up-for-early-access-2020/event";
-  title = 'generate-qrcode';
-  elementType: 'url' | 'canvas' | 'img' = 'url';
   value: any;
-  display = true;
-
+  display: boolean;
+  qrcodename: string = "http://pyticketingsystem.com/events/id=";
   constructor(
     public dialogRef: MatDialogRef<EventTicketDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any) { 
-        this.value = this.qrcodename;
-        this.display = true;
-       // alert('value' + this.value);
+      this.value = this.qrcodename;
+      this.display = true;
+      console.log('Data' , data);      
     }
 
+
+    
   onNoClick(): void {
     this.dialogRef.close();
   }
 
+  makePdf() {
+    var DocumentContainer = document.getElementById('content');
+    var html = '<html><head>'+
+               '<link href="../../../assets/css/ticket.css" rel="stylesheet" type="text/css" />'+
+               '</head><body style="background:#ffffff;">'+
+               DocumentContainer.innerHTML+
+               '</body></html>';
 
+    var WindowObject = window.open("", "PrintWindow",
+    "width=auto,height=auto,top=50,left=50,toolbars=no,scrollbars=yes,status=no,resizable=yes, _blank");
+    WindowObject.document.writeln(DocumentContainer.innerHTML);
+    WindowObject.document.close();
+    WindowObject.focus();
+    WindowObject.print();
+    WindowObject.close();
+    
+    document.getElementById('print_link').style.display='block';
+  }
   downloadImage() {
-    htmlToImage.toJpeg(document.getElementById('my-node'), {
+    htmlToImage.toJpeg(document.getElementById('content'), {
         quality: 0.95
       })
       .then(function (dataUrl) {

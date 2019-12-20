@@ -2,15 +2,11 @@
   <div class="overlay"></div>
   <div class="container">
     <div class="row no-gutters slider-text align-items-center justify-content-start">
-      <!-- <div class="single-event-map"> -->
-       
-      <!-- </div> -->
-      <div class="col-lg-6 col-md-6 ftco-animate" >
-       
+      <div class="col-lg-6 col-md-6 ftco-animate">
         <h1 class="mb-4"> {{ eventData[0].title }}
           <br><span>{{ eventData[0].eventDescription }}</span></h1>
         <p class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span
-            class="icon-calendar mr-2"></span>{{ eventData[0].startDate  }}  - {{ eventData[0].endDate  }}</p>
+            class="icon-calendar mr-2"></span>{{ eventData[0].startDate  }} - {{ eventData[0].endDate  }}</p>
         <div id="timer" class="d-flex">
           <div class="time" id="days"></div>
           <div class="time pl-3" id="hours"></div>
@@ -18,73 +14,55 @@
           <div class="time pl-3" id="seconds"></div>
         </div>
         <iframe id="gmap_canvas"
-        src="https://maps.google.com/maps?q=BKC Bandra east mumbai&t=&z=15&ie=UTF8&iwloc=&output=embed"
-        frameborder="0" scrolling="no" width="500px" height="300px"></iframe>
+          src="https://maps.google.com/maps?q=BKC Bandra east mumbai&t=&z=15&ie=UTF8&iwloc=&output=embed"
+          frameborder="0" scrolling="no" width="500px" height="300px"></iframe>
       </div>
       <div class="col-lg-2 col"></div>
       <div class="col-lg-4 col-md-6 mt-0 mt-md-5">
         <form [formGroup]="profileForm" class="request-form ftco-animate">
           <h2>Join Event</h2>
           <div class="form-group">
-            <input type="text" class="form-control" data-toggle="tooltip" title="Enter your Full Name" data-placement="bottom" formControlName="Name" placeholder="Enter your Full Name">
+            <input type="text" class="form-control" data-toggle="tooltip" title="Enter your Full Name"
+              data-placement="bottom" formControlName="Name" placeholder="Enter your Full Name">
           </div>
           <div class="form-group">
-            <input type="text" class="form-control" data-toggle="tooltip" title="Enter your EmailId" data-placement="bottom" formControlName="EmailId" placeholder="Enter your Email">
+            <input type="text" class="form-control" data-toggle="tooltip" title="Enter your EmailId"
+              data-placement="bottom" formControlName="EmailId" placeholder="Enter your Email">
           </div>
           <div class="form-group">
-            <input type="text" class="form-control" data-toggle="tooltip" title="Enter your MobileNumber" data-placement="bottom" formControlName="MobileNumber" placeholder="Enter your Phone">
+            <input type="text" class="form-control" data-toggle="tooltip" title="Enter your MobileNumber"
+              data-placement="bottom" formControlName="MobileNumber" placeholder="Enter your Phone">
           </div>
           <div class="form-group">
-            <!-- <input type="text" class="form-control" placeholder="Enter your Phone"> -->
             <div class="row">
               <div class="col-6">
-                <select formControlName="documentIdType" data-toggle="tooltip" title="Select Document type" data-placement="bottom" class="form-control">
+                <select formControlName="documentIdType" data-toggle="tooltip" title="Select Document type"
+                  data-placement="bottom" class="form-control">
                   <option value="default">-- Select a Id Proof --</option>
-                  <option value="Pancard">Pancard.</option>
-                  <option value="Adhar">Adhar</option>
+                  <option value="PANCARD">Pancard.</option>
+                  <option value="ADHAR">Adhar</option>
                   <option value="DL">Driving License</option>
                 </select>
               </div>
               <div class="col-6">
-                <input type="text" class="form-control" data-toggle="tooltip" title="Enter document idnumber" data-placement="bottom" formControlName="idnumber" placeholder="Id number">
+                <input type="text" class="form-control" data-toggle="tooltip" title="Enter document idnumber"
+                  data-placement="bottom" formControlName="idnumber" placeholder="Id number">
               </div>
             </div>
           </div>
-          <div class="row" >
+          <div class="row">
             <div class="col-6">
               Seats
             </div>
             <div class="col-6" data-toggle="tooltip" title="Add number of seats" data-placement="bottom">
               <div class="number-input">
-                <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" ></button>
-                <input class="quantity" min="0" name="quantity" formControlName="Quantity" value="1" type="number">
+                <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()"></button>
+                <input class="quantity" id="myInput" formControlName="Quantity" type="number">
                 <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
               </div>
             </div>
           </div>
-          <!-- <div class="col-lg-12">
-            <div class="row">
-              <h4 class="col-lg-4">Seats :</h4>
-              <div class="col-lg-8">
-                <div class="input-group">
-                  <span class="input-group-btn">
-                    <button type="button" (click)="decrement()" class="btn btn-danger btn-number">
-                      <span class="glyphicon glyphicon-minus"></span>
-                    </button>
-                  </span>
-                  <input type="text" formControlName="Quantity" class="form-control input-number" value="{{count}}">
-                  <span class="input-group-btn">
-                    <button type="button" (click)="increment()" class="btn btn-success btn-number">
-                      <span class="glyphicon glyphicon-plus"></span>
-                    </button>
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div> -->
           <hr>
-          <!-- <div class="col-lg-12 text-center mt-3"><button type="submit" style="text-align: center;"
-              class="btn gradient-bg" [disabled]="!profileForm.valid">Submit</button></div> -->
           <button type="submit" style="text-align: center;" *ngIf="display" (click)="downloadImage()"
             class="btn gradient-bg">Download E-Ticket</button>
           <div class="form-group">
@@ -94,7 +72,9 @@
             </div>
           </div>
           <div class="form-group">
-            <input type="submit" data-toggle="tooltip" title="Click to book event ticket" data-placement="bottom" (click)="generateQRCode()"  [disabled]="!profileForm.valid" value="Book now" class="btn btn-primary py-3 px-4">
+            <input type="submit" data-toggle="tooltip" title="Click to book event ticket" data-placement="bottom"
+              (click)="generateQRCode()" [disabled]="!profileForm.valid" value="Book now"
+              class="btn btn-primary py-3 px-4">
           </div>
         </form>
       </div>
@@ -118,396 +98,3 @@
     </div>
   </div>
 </section>
-<div class="container" *ngIf="display" id="my-node" style="background-color: #ffff;">
-  <div class="row">
-    <div class="col-xs-12">
-      <div class="invoice-title">
-        <h2>Invoice</h2>
-        <h3 class="pull-right">Order #12345</h3>
-      </div>
-      <hr>
-      <div class="row">
-        <div class="col-xs-6">
-          <address>
-            <strong>Billed To:</strong><br>
-            John Smith<br>
-            1234 Main<br>
-            Apt. 4B<br>
-            Springfield, ST 54321
-          </address>
-        </div>
-        <div class="col-xs-6 text-right">
-          <address>
-            <strong>To:</strong><br>
-            Jane Smith<br>
-            1234 Main<br>
-            Apt. 4B<br>
-            Springfield, ST 54321
-          </address>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-6">
-          <address>
-            <strong>Payment Method:</strong><br>
-            Visa ending **** 4242<br>
-            jsmith@email.com
-          </address>
-        </div>
-        <div class="col-xs-6 text-right">
-          <address>
-            <strong>Order Date:</strong><br>
-            December 11, 2019<br><br>
-          </address>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <div class="row">
-    <div class="col-md-12">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title"><strong>Order summary</strong></h3>
-        </div>
-        <div class="panel-body">
-          <div class="table-responsive">
-            <table class="table table-condensed">
-              <thead>
-                <tr>
-                  <td><strong>Item</strong></td>
-                  <td class="text-center"><strong>Price</strong></td>
-                  <td class="text-center"><strong>Quantity</strong></td>
-                  <td class="text-right"><strong>Totals</strong></td>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>BS-200</td>
-                  <td class="text-center">$10.99</td>
-                  <td class="text-center">1</td>
-                  <td class="text-right">$10.99</td>
-                </tr>
-                <tr>
-                  <td>BS-400</td>
-                  <td class="text-center">$20.00</td>
-                  <td class="text-center">3</td>
-                  <td class="text-right">$60.00</td>
-                </tr>
-                <tr>
-                  <td>BS-1000</td>
-                  <td class="text-center">$600.00</td>
-                  <td class="text-center">1</td>
-                  <td class="text-right">$600.00</td>
-                </tr>
-                <tr>
-                  <td class="thick-line"></td>
-                  <td class="thick-line"></td>
-                  <td class="thick-line text-center"><strong>Subtotal</strong></td>
-                  <td class="thick-line text-right">$670.99</td>
-                </tr>
-
-                <tr>
-                  <td class="no-line"></td>
-                  <td class="no-line"></td>
-                  <td class="no-line text-center"><strong>Total</strong></td>
-                  <td class="no-line text-right">$685.99</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-
-
-      </div>
-    </div>
-  </div>
-
-  <div class="col-lg-12 text-center mt-3">
-    <ngx-qrcode id="qrCodeImage" [qrc-element-type]="elementType" [qrc-value]="value | json">
-      <p>Ticket Id: KKBK000063</p>
-    </ngx-qrcode>
-
-  </div>
-</div>
-
-
-<!-- <div class="container">
-  <div class="row">
-    <h4 class="entry-title" style="font-size: 41px;">{{ eventData[0].eventDescription }}</h4>
-    <div class="col-12 single-event">
-      <div class="event-content-wrap">
-        <header class="entry-header flex flex-wrap justify-content-between align-items-end">
-          <div class="single-event-heading">
-            <h2 class="entry-title">{{ eventData[0].actor }}</h2>
-            <div class="event-location"><a href="#">{{ eventData[0].title }}</a></div>
-
-            <div class="event-date">{{ eventData[0].startDate }}</div>
-          </div>
-        </header>
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-12">
-      <div class="tabs">
-        <ul class="tabs-nav flex">
-          <li class="tab-nav flex justify-content-center align-items-center" data-target="#tab_details">Details</li>
-          <li class="tab-nav flex justify-content-center align-items-center" data-target="#tab_venue">Venue</li>
-          <li class="tab-nav flex justify-content-center align-items-center" data-target="#tab_organizers">Terms &
-            Conditions</li>
-        </ul>
-
-        <div class="tabs-container">
-          <div id="tab_details" class="tab-content">
-            <div class="flex flex-wrap justify-content-between">
-              <div class="single-event-details">
-                <div class="single-event-details-row">
-                  <label>Start:</label>
-                  <p>{{ eventData[0].startDate | date : format : timezone }}</p>
-                </div>
-                <div class="single-event-details-row">
-                  <label>End Date:</label>
-                  <p>{{ eventData[0].endDate | date : format : timezone }}</p>
-                </div>
-
-                <div class="single-event-details-row">
-                  <label>Categories:</label>
-                  <p>{{ eventData[0].eventCategory }}</p>
-                </div>
-              </div>
-
-              <div class="single-event-map">
-                <iframe id="gmap_canvas"
-                  src="https://maps.google.com/maps?q=BKC Bandra east mumbai&t=&z=15&ie=UTF8&iwloc=&output=embed"
-                  frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
-              </div>
-            </div>
-          </div>
-
-          <div id="tab_venue" class="tab-content">
-            <p> {{ eventData[0].address }} , {{ eventData[0].city }} , {{ eventData[0].state }}
-              {{ eventData[0].country }}</p>
-          </div>
-
-          <div id="tab_organizers" class="tab-content">
-            <ul *ngFor="let item of eventData[0].termsandcondition">
-              <li>{{ item.Name }}</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="contact-form">
-    <h2 style="text-align: center;">
-      Register for event
-    </h2>
-    <form class="row" [formGroup]="profileForm" (ngSubmit)="generateQRCode()">
-      <div class="col-12">
-        <input type="text" formControlName="Name" placeholder="Name">
-      </div>
-      <div class="col-12">
-        <input type="text" formControlName="MobileNumber" placeholder="Mobile">
-      </div>
-      <div class="col-12">
-        <input type="email" formControlName="EmailId" placeholder="E-mail">
-      </div>
-      <div class="col-lg-12">
-        <div class="row">
-          <div class="col-4">
-            Select Id Proof
-          </div>
-          <div class="col-4">
-
-            <select class="form-control">
-              <option value="default">-- Select a Id Proof --</option>
-              <option>Pancard.</option>
-              <option>Adhar</option>
-              <option>Driving License</option>
-            </select>
-          </div>
-
-          <div class="col-4">
-            <input type="text" formControlName="Address" placeholder="Id number">
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-12">
-        <div class="row">
-          <h4 class="col-lg-4">Seats :</h4>
-          <div class="col-lg-8">
-            <div class="input-group">
-              <span class="input-group-btn">
-                <button type="button" (click)="decrement()" class="btn btn-danger btn-number">
-                  <span class="glyphicon glyphicon-minus"></span>
-                </button>
-              </span>
-              <input type="text" formControlName="Quantity" class="form-control input-number" value="{{count}}">
-              <span class="input-group-btn">
-                <button type="button" (click)="increment()" class="btn btn-success btn-number">
-                  <span class="glyphicon glyphicon-plus"></span>
-                </button>
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <hr>
-      <div class="col-lg-12 text-center mt-3"><button type="submit" style="text-align: center;" class="btn gradient-bg"
-          [disabled]="!profileForm.valid">Submit</button></div>
-      <button type="submit" style="text-align: center;" *ngIf="display" (click)="downloadImage()"
-        class="btn gradient-bg">Download E-Ticket</button>
-    </form>
-  </div>
-
-  <div class="container" *ngIf="display" id="my-node" style="background-color: #ffff;">
-    <div class="row">
-      <div class="col-xs-12">
-        <div class="invoice-title">
-          <h2>Invoice</h2>
-          <h3 class="pull-right">Order #12345</h3>
-        </div>
-        <hr>
-        <div class="row">
-          <div class="col-xs-6">
-            <address>
-              <strong>Billed To:</strong><br>
-              John Smith<br>
-              1234 Main<br>
-              Apt. 4B<br>
-              Springfield, ST 54321
-            </address>
-          </div>
-          <div class="col-xs-6 text-right">
-            <address>
-              <strong>To:</strong><br>
-              Jane Smith<br>
-              1234 Main<br>
-              Apt. 4B<br>
-              Springfield, ST 54321
-            </address>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-6">
-            <address>
-              <strong>Payment Method:</strong><br>
-              Visa ending **** 4242<br>
-              jsmith@email.com
-            </address>
-          </div>
-          <div class="col-xs-6 text-right">
-            <address>
-              <strong>Order Date:</strong><br>
-              December 11, 2019<br><br>
-            </address>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="row">
-      <div class="col-md-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title"><strong>Order summary</strong></h3>
-          </div>
-          <div class="panel-body">
-            <div class="table-responsive">
-              <table class="table table-condensed">
-                <thead>
-                  <tr>
-                    <td><strong>Item</strong></td>
-                    <td class="text-center"><strong>Price</strong></td>
-                    <td class="text-center"><strong>Quantity</strong></td>
-                    <td class="text-right"><strong>Totals</strong></td>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>BS-200</td>
-                    <td class="text-center">$10.99</td>
-                    <td class="text-center">1</td>
-                    <td class="text-right">$10.99</td>
-                  </tr>
-                  <tr>
-                    <td>BS-400</td>
-                    <td class="text-center">$20.00</td>
-                    <td class="text-center">3</td>
-                    <td class="text-right">$60.00</td>
-                  </tr>
-                  <tr>
-                    <td>BS-1000</td>
-                    <td class="text-center">$600.00</td>
-                    <td class="text-center">1</td>
-                    <td class="text-right">$600.00</td>
-                  </tr>
-                  <tr>
-                    <td class="thick-line"></td>
-                    <td class="thick-line"></td>
-                    <td class="thick-line text-center"><strong>Subtotal</strong></td>
-                    <td class="thick-line text-right">$670.99</td>
-                  </tr>
-
-                  <tr>
-                    <td class="no-line"></td>
-                    <td class="no-line"></td>
-                    <td class="no-line text-center"><strong>Total</strong></td>
-                    <td class="no-line text-right">$685.99</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-
-
-        </div>
-      </div>
-    </div>
-
-    <div class="col-lg-12 text-center mt-3">
-      <ngx-qrcode id="qrCodeImage" [qrc-element-type]="elementType" [qrc-value]="value | json">
-        <p>Ticket Id: KKBK000063</p>
-      </ngx-qrcode>
-
-    </div>
-  </div>
-  <br />
-</div> -->
-
-<!-- <div class="newsletter-subscribe">
-  <div class="container">
-    <div class="row">
-      <div class="col-12">
-        <header class="entry-header">
-          <h2 class="entry-title">Subscribe to our newsletter to get the latest trends & news</h2>
-          <p>Join our database NOW!</p>
-        </header>
-
-        <div class="newsletter-form">
-          <form class="flex flex-wrap justify-content-center align-items-center">
-            <div class="col-md-12 col-lg-3">
-              <input type="text" placeholder="Name">
-            </div>
-
-            <div class="col-md-12 col-lg-6">
-              <input type="email" placeholder="Your e-mail">
-            </div>
-
-            <div class="col-md-12 col-lg-3">
-              <input class="btn gradient-bg" type="submit" value="Subscribe">
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->
