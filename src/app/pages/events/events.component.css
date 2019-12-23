@@ -30,7 +30,7 @@ input[type="number"] {
   .number-input button {
     outline:none;
     -webkit-appearance: none;
-    background-color: red;
+    background-color: #CCB;
     border: none;
     align-items: center;
     justify-content: center;
@@ -57,7 +57,7 @@ input[type="number"] {
   
   .number-input input[type=number] {
     font-family: sans-serif;
-    max-width: 5rem;
+    max-width: 11rem;
     padding: .5rem;
     border: solid #ddd;
     border-width: 0 2px;
@@ -68,5 +68,5 @@ input[type="number"] {
   }
 
   select.form-control:not([size]):not([multiple]){
-    height: auto;
-  } 
+    height: 35px;
+  }

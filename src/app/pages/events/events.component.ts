@@ -77,21 +77,22 @@ export class EventsComponent implements OnInit {
   }
 
   generateQRCode() {
-    
+    // 
+    // var result = document.getElementsByClassName("quantity").value;
     // var result = document.getElementById("ticket").value;
-    // alert('quantity' + result);
     console.log('dddd', this.profileForm.value);
     if (this.profileForm.valid) {
+      var result = (<HTMLInputElement>document.getElementById("myInput")).value;
       let params ={
-        "totalTickets": this.profileForm.value.Quantity,
+        "totalTickets": result,
          "eventId": this.id,
          "name": this.profileForm.value.Name,
-         "email": "24@gmail.com",//this.profileForm.value.EmailId,
+         "email": this.profileForm.value.EmailId,
          "docType": this.profileForm.value.documentIdType,
          "docId": this.profileForm.value.idnumber
       };
 
-      // console.log('params:', this.profileForm);
+      console.log('params:', params);
       this.api._postAPI('event/book', params).pipe(
           catchError(err => {
             // alert('Handling error locally and rethrowing it...'+ JSON.stringify(err));
@@ -133,7 +134,6 @@ export class EventsComponent implements OnInit {
                   autoFocus : false
                 });
                
-               
                 dialogRef.afterClosed().subscribe(result => {
                   this.value = result;
                 });
@@ -142,15 +142,6 @@ export class EventsComponent implements OnInit {
             } else {
               alert('Error!!!' + res.message)
             }
-            // const dialogRef = this.matDialog.open(EventTicketDialog, {
-            //   // data: this.value,
-            //   width: '600px',
-            //   hasBackdrop: true,
-            //   autoFocus : false
-            // });
-            // dialogRef.afterClosed().subscribe(result => {
-            //   this.value = result;
-            // });
           },
           err => {
             if (err.length > 0) {
@@ -190,7 +181,6 @@ export class EventsComponent implements OnInit {
 }
 
 
-
 @Component({
   selector: 'dialog-content-example-dialog',
   templateUrl: './eventticket-dialog.html',
@@ -198,13 +188,15 @@ export class EventsComponent implements OnInit {
 export class EventTicketDialog {
   value: any;
   display: boolean;
+  elementType: 'url' | 'canvas' | 'img' = 'url';
+
   qrcodename: string = "http://pyticketingsystem.com/events/id=";
   constructor(
     public dialogRef: MatDialogRef<EventTicketDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any) { 
       this.value = this.qrcodename;
       this.display = true;
-      console.log('Data' , data);      
+      // console.log('Data' , data);      
     }
 
 

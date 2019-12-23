@@ -1,4 +1,4 @@
-<div class="hero-wrap" style="background-image: url('../../../assets/images/bg_2.jpg');">
+<div class="hero-wrap" style="height: 65%;">
   <div class="overlay"></div>
   <div class="container">
     <div class="row no-gutters slider-text align-items-center justify-content-start">
@@ -6,7 +6,7 @@
         <h1 class="mb-4"> {{ eventData[0].title }}
           <br><span>{{ eventData[0].eventDescription }}</span></h1>
         <p class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span
-            class="icon-calendar mr-2"></span>{{ eventData[0].startDate  }} - {{ eventData[0].endDate  }}</p>
+            class="icon-calendar mr-2"></span>{{ eventData[0].startDate | date:'EEE MMM dd yyyy hh:mm a' }} &nbsp;<b>To</b>&nbsp;  {{ eventData[0].endDate | date:'EEE MMM dd yyyy hh:mm a' }}</p>
         <div id="timer" class="d-flex">
           <div class="time" id="days"></div>
           <div class="time pl-3" id="hours"></div>
@@ -52,7 +52,9 @@
           </div>
           <div class="row">
             <div class="col-6">
-              Seats
+              <!-- <input type="button" class="form-control" data-toggle="tooltip" title="Enter document idnumber"
+              data-placement="bottom" value="Seats" placeholder="Id number"> -->
+              <label class="form-control">Seats</label>
             </div>
             <div class="col-6" data-toggle="tooltip" title="Add number of seats" data-placement="bottom">
               <div class="number-input">
@@ -65,12 +67,12 @@
           <hr>
           <button type="submit" style="text-align: center;" *ngIf="display" (click)="downloadImage()"
             class="btn gradient-bg">Download E-Ticket</button>
-          <div class="form-group">
+          <!-- <div class="form-group">
             <div class="checkbox">
               <label><input type="checkbox" value="" class="mr-2"> I have read and accept the terms and
                 conditions</label>
             </div>
-          </div>
+          </div> -->
           <div class="form-group">
             <input type="submit" data-toggle="tooltip" title="Click to book event ticket" data-placement="bottom"
               (click)="generateQRCode()" [disabled]="!profileForm.valid" value="Book now"
@@ -90,8 +92,7 @@
           <div class="icon"><span class="flaticon-placeholder"></span></div>
           <div class="media-body">
             <h3 class="heading mb-3">Venue</h3>
-            <p> {{ eventData[0].address }} , {{ eventData[0].city }} , {{ eventData[0].state }}
-              {{ eventData[0].country }}</p>
+            <p> {{ eventData[0].address }}</p>
           </div>
         </div>
       </div>

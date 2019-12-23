@@ -26,8 +26,8 @@
             </p>
           </div>
         </section>
-        <section class="card-cont">
-          <ngx-qrcode [qrc-element-type]="elementType" [qrc-value]="data.QrCodeValue | json">
+        <section class="qr-wrp">
+        <ngx-qrcode [qrc-element-type]="elementType" [qrc-value]="data.QrCodeValue | json">
           </ngx-qrcode>
           <a *ngIf="display" (click)="downloadImage()" download>Download</a>
         </section>
@@ -213,7 +213,7 @@
     }
 
     .qr-wrp {
-      width: 10%;
+      width: 10px;
       display: table-cell;
       padding-right: 10px;
     }
@@ -235,6 +235,10 @@
       .card-cont .even-info {
         font-size: 75%
       }
+    }
+
+    .test-class > img {
+      width: 20px;
     }
 
   </style>
