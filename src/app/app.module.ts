@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
-import { EventsComponent } from './pages/events/events.component';
+import { EventsComponent, EventTicketDialog } from './pages/events/events.component';
 import { AboutComponent } from './pages/about/about.component';
 import { ContactusComponent } from './pages/contactus/contactus.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -16,6 +16,8 @@ import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';    
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
+import { MatDialogModule } from '@angular/material/dialog';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -28,15 +30,23 @@ import { FormsModule,ReactiveFormsModule } from '@angular/forms';
     FooterComponent,
     ProfileComponent,
     SettingsComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    EventTicketDialog
   ],
+
+  entryComponents: [
+    EventTicketDialog
+  ],
+
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     NgxQRCodeModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatDialogModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,224 +1,101 @@
-<div class="page-header single-event-page-header">
+<div class="hero-wrap" style="height: 65%;">
+  <div class="overlay"></div>
   <div class="container">
-    <div class="row">
-      <div class="col-12">
-        <header class="entry-header">
-          <h4 class="entry-title" style="font-size: 41px;">{{ eventData[0].name }}</h4>
-        </header>
+    <div class="row no-gutters slider-text align-items-center justify-content-start">
+      <div class="col-lg-6 col-md-6 ftco-animate">
+        <h1 class="mb-4"> {{ eventData[0].title }}
+          <br><span>{{ eventData[0].eventDescription }}</span></h1>
+        <p class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span
+            class="icon-calendar mr-2"></span>{{ eventData[0].startDate | date:'EEE MMM dd yyyy hh:mm a' }} &nbsp;<b>To</b>&nbsp;  {{ eventData[0].endDate | date:'EEE MMM dd yyyy hh:mm a' }}</p>
+        <div id="timer" class="d-flex">
+          <div class="time" id="days"></div>
+          <div class="time pl-3" id="hours"></div>
+          <div class="time pl-3" id="minutes"></div>
+          <div class="time pl-3" id="seconds"></div>
+        </div>
+        <iframe id="gmap_canvas"
+          src="https://maps.google.com/maps?q=BKC Bandra east mumbai&t=&z=15&ie=UTF8&iwloc=&output=embed"
+          frameborder="0" scrolling="no" width="500px" height="300px"></iframe>
       </div>
-    </div>
-  </div>
-</div>
-<div class="container">
-  <div class="row">
-    <div class="col-12 single-event">
-      <div class="event-content-wrap">
-        <header class="entry-header flex flex-wrap justify-content-between align-items-end">
-          <div class="single-event-heading">
-            <h2 class="entry-title">{{ eventData[0].actor }}</h2>
-
-            <div class="event-location"><a href="#">{{ eventData[0].name }}</a></div>
-
-            <div class="event-date">{{ eventData[0].startDate }}</div>
+      <div class="col-lg-2 col"></div>
+      <div class="col-lg-4 col-md-6 mt-0 mt-md-5">
+        <form [formGroup]="profileForm" class="request-form ftco-animate">
+          <h2>Join Event</h2>
+          <div class="form-group">
+            <input type="text" class="form-control" data-toggle="tooltip" title="Enter your Full Name"
+              data-placement="bottom" formControlName="Name" placeholder="Enter your Full Name">
           </div>
-        </header>
-
-        <figure class="events-thumbnail">
-          <img src="../../../assets/images/summer.jpg" alt="">
-        </figure>
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-12">
-      <div class="tabs">
-        <ul class="tabs-nav flex">
-          <li class="tab-nav flex justify-content-center align-items-center" data-target="#tab_details">Details</li>
-          <li class="tab-nav flex justify-content-center align-items-center" data-target="#tab_venue">Venue</li>
-          <li class="tab-nav flex justify-content-center align-items-center" data-target="#tab_organizers">Terms &
-            Conditions</li>
-        </ul>
-
-        <div class="tabs-container">
-          <div id="tab_details" class="tab-content">
-            <div class="flex flex-wrap justify-content-between">
-              <div class="single-event-details">
-                <div class="single-event-details-row">
-                  <label>Start:</label>
-                  <p>{{ eventData[0].startDate }}</p>
-                </div>
-                <div class="single-event-details-row">
-                  <label>Price:</label>
-                  <p>{{ eventData[0].price }}</p>
-                </div>
-
-                <div class="single-event-details-row">
-                  <label>Categories:</label>
-                  <p>{{ eventData[0].category }}</p>
-                </div>
-
-                <div class="single-event-details-row">
-                  <label>Tags:</label>
-                  <p>
-                    {{ eventData[0].tags }}
-                  </p>
-                </div>
+          <div class="form-group">
+            <input type="text" class="form-control" data-toggle="tooltip" title="Enter your EmailId"
+              data-placement="bottom" formControlName="EmailId" placeholder="Enter your Email">
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" data-toggle="tooltip" title="Enter your MobileNumber"
+              data-placement="bottom" formControlName="MobileNumber" placeholder="Enter your Phone">
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-6">
+                <select formControlName="documentIdType" data-toggle="tooltip" title="Select Document type"
+                  data-placement="bottom" class="form-control">
+                  <option value="default">-- Select a Id Proof --</option>
+                  <option value="PANCARD">Pancard.</option>
+                  <option value="ADHAR">Adhar</option>
+                  <option value="DL">Driving License</option>
+                </select>
               </div>
-
-              <div class="single-event-map">
-
-                <!-- <iframe id="gmap_canvas" src="https://www.google.com/maps/embed?origin=mfe&pb=!1m3!2m1!1suniversity+of+san+francisco!6i15" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe> -->
-                <iframe id="gmap_canvas"
-                  src="https://maps.google.com/maps?q=BKC Bandra east mumbai&t=&z=15&ie=UTF8&iwloc=&output=embed"
-                  frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+              <div class="col-6">
+                <input type="text" class="form-control" data-toggle="tooltip" title="Enter document idnumber"
+                  data-placement="bottom" formControlName="idnumber" placeholder="Id number">
               </div>
             </div>
           </div>
-
-          <div id="tab_venue" class="tab-content">
-            <!-- <p>Jio Garden, BKC, Mumbai.</p> -->
-            <p> {{ eventData[0].location }}</p>
+          <div class="row">
+            <div class="col-6">
+              <!-- <input type="button" class="form-control" data-toggle="tooltip" title="Enter document idnumber"
+              data-placement="bottom" value="Seats" placeholder="Id number"> -->
+              <label class="form-control">Seats</label>
+            </div>
+            <div class="col-6" data-toggle="tooltip" title="Add number of seats" data-placement="bottom">
+              <div class="number-input">
+                <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()"></button>
+                <input class="quantity" id="myInput" formControlName="Quantity" type="number">
+                <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
+              </div>
+            </div>
           </div>
-
-          <div id="tab_organizers" class="tab-content">
-            <ul *ngFor="let item of eventData[0].termsandcondition">
-              <li>{{ item.Name }}</li>
-            </ul>
+          <hr>
+          <button type="submit" style="text-align: center;" *ngIf="display" (click)="downloadImage()"
+            class="btn gradient-bg">Download E-Ticket</button>
+          <!-- <div class="form-group">
+            <div class="checkbox">
+              <label><input type="checkbox" value="" class="mr-2"> I have read and accept the terms and
+                conditions</label>
+            </div>
+          </div> -->
+          <div class="form-group">
+            <input type="submit" data-toggle="tooltip" title="Click to book event ticket" data-placement="bottom"
+              (click)="generateQRCode()" [disabled]="!profileForm.valid" value="Book now"
+              class="btn btn-primary py-3 px-4">
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-12">
-      <!-- <div class="event-tickets"> -->
-
-      <div class="contact-form">
-        <h2 style="text-align: center;">
-          Register for event
-        </h2>
-        <form class="row" [formGroup]="profileForm" (ngSubmit)="generateQRCode()">
-          <div class="col-12">
-            <input type="text" formControlName="Name" placeholder="Name">
-          </div>
-          <div class="col-12">
-            <input type="text" formControlName="MobileNumber" placeholder="Mobile">
-          </div>
-          <div class="col-12">
-            <input type="email" formControlName="EmailId" placeholder="E-mail">
-          </div>
-          <div class="col-12">
-            <textarea placeholder="Address" formControlName="Address" rows="4"></textarea>
-          </div>
-          <div class="col-12">
-            <!-- <input type="text" formControlName="Seats" placeholder="seats"> -->
-
-            <span class="lblSpan">Select Seats:</span>
-            <select placeholder="seats" formControlName="Seats" class="inputSelect">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="1">5</option>
-              <option value="2">6</option>
-              <option value="3">7</option>
-              <option value="4">8</option>
-              <option value="3">9</option>
-              <option value="4">10</option>
-            </select>
-
-
-          </div>
-          <!-- <input type="submit" class="btn gradient-bg" value="Buy Ticket"> -->
-          <!-- <button type="submit" style="text-align: center;" class="btn gradient-bg"
-            [disabled]="!profileForm.valid">Submit</button> -->
-            <button type="submit" style="text-align: center;" class="btn gradient-bg"
-            >Submit</button>
-         
-          <a [href]="href" *ngIf="display" (click)="downloadImage()" download>Download E-Ticket</a>
         </form>
       </div>
-      <ngx-qrcode *ngIf="display" id="qrCodeImage" [qrc-element-type]="elementType" [qrc-value]="value">
-    </ngx-qrcode><br>
-      <!-- </div> -->
     </div>
   </div>
+</div>
 
-  <br />
-
-  <div class="row">
-    <div class="col-12">
-      <div class="upcoming-events">
-        <div class="upcoming-events-header">
-          <h4>Upcoming Events</h4>
-        </div>
-
-
-      </div>
-      <div class="row events-list">
-        <div class="col-12 col-lg-6 single-event" *ngFor="let item of upcommingevents">
-          <figure class="events-thumbnail">
-            <a href="#"><img src="{{ item.Image }}" alt=""></a>
-          </figure>
-
-          <div class="event-content-wrap">
-            <header class="entry-header flex justify-content-between">
-              <div>
-                <h2 class="entry-title"><a href="#">{{ item.Title }}</a></h2>
-
-                <div class="event-location"><a href="#">{{ item.SubTitle }}</a></div>
-
-                <div class="event-date">{{ item.StartDate }} - {{ item.EndDate }}</div>
-              </div>
-
-              <div class="event-cost flex justify-content-center align-items-center">
-                from<span>
-                  {{ item.Price }}
-                </span>
-              </div>
-            </header>
-
-            <footer class="entry-footer">
-              <a href="#">Buy Tikets</a>
-            </footer>
+<section class="ftco-section services-section bg-primary">
+  <div class="container">
+    <div class="row d-flex">
+      <div class="col-md-6 d-flex align-self-stretch ftco-animate">
+        <div class="media block-6 services d-block">
+          <div class="icon"><span class="flaticon-placeholder"></span></div>
+          <div class="media-body">
+            <h3 class="heading mb-3">Venue</h3>
+            <p> {{ eventData[0].address }}</p>
           </div>
         </div>
       </div>
     </div>
   </div>
-
-
-
-
-</div>
-
-<div class="newsletter-subscribe">
-  <div class="container">
-    <div class="row">
-      <div class="col-12">
-        <header class="entry-header">
-          <h2 class="entry-title">Subscribe to our newsletter to get the latest trends & news</h2>
-          <p>Join our database NOW!</p>
-        </header>
-
-        <div class="newsletter-form">
-          <form class="flex flex-wrap justify-content-center align-items-center">
-            <div class="col-md-12 col-lg-3">
-              <input type="text" placeholder="Name">
-            </div>
-
-            <div class="col-md-12 col-lg-6">
-              <input type="email" placeholder="Your e-mail">
-            </div>
-
-            <div class="col-md-12 col-lg-3">
-              <input class="btn gradient-bg" type="submit" value="Subscribe">
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+</section>

@@ -71,7 +71,7 @@ a:active {
 # Button
 --------------------------------------------------------------*/
 .btn {
-  padding: 16px 46px;
+  /* padding: 16px 46px; */
   border: 2px solid #9a24c1;
   border-radius: 50px;
   font-size: 18px;

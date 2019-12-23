@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <title>PY-Ticket</title>
@@ -14,9 +15,15 @@
   <!-- Swiper CSS -->
   <link rel="stylesheet" href="./assets/css/swiper.css">
   <!-- Styles -->
+  <!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"> -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="./assets/style.css">
   <script src="./assets/js/custom.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
+
 <body>
   <app-root></app-root>
 </body>
@@ -28,4 +35,38 @@
 <script type='text/javascript' src='./assets/js/circle-progress.min.js'></script>
 <script type='text/javascript' src='./assets/js/jquery.countTo.min.js'></script>
 <script type='text/javascript' src='./assets/js/custom.js'></script>
+
+
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<!-- <script src="//code.jquery.com/jquery-1.11.1.min.js"></script> -->
+<script>
+  $(document).ready(function () {
+
+    var quantitiy = 0;
+    $('.quantity-right-plus').click(function (e) {
+      // Stop acting like a button
+      e.preventDefault();
+      // Get the field name
+      var quantity = parseInt($('#quantity').val());
+      // If is not undefined
+      $('#quantity').val(quantity + 1);
+      // Increment
+    });
+
+    $('.quantity-left-minus').click(function (e) {
+      // Stop acting like a button
+      e.preventDefault();
+      // Get the field name
+      var quantity = parseInt($('#quantity').val());
+      // If is not undefined
+      // Increment
+      if (quantity > 0) {
+        $('#quantity').val(quantity - 1);
+      }
+    });
+
+  });
+
+</script>
+
 </html>
