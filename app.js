@@ -16,6 +16,10 @@ app.get('/pyticketingsystem/*',(req,res)=>{
     res.sendFile(path.join(__dirname,'dist/pyticketingsystem/index.html'))
 });
 
+app.get('/*', function(req, res) {
+    res.sendFile(path.join(__dirname + '/dist/pyticketingsystem/index.html'));
+});
+
 app.use("/",express.static(path.join(__dirname,'dist/pyticketingsystem')))
 
 const port = process.env.PORT || 4200;
