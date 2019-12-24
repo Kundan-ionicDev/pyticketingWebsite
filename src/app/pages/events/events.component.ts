@@ -196,11 +196,8 @@ export class EventTicketDialog {
     @Inject(MAT_DIALOG_DATA) public data: any) { 
       this.value = this.qrcodename;
       this.display = true;
-      // console.log('Data' , data);      
-    }
+  }
 
-
-    
   onNoClick(): void {
     this.dialogRef.close();
   }
