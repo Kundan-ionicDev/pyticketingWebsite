@@ -37,7 +37,7 @@ export class EventsComponent implements OnInit {
     public api: PyticketService) {
       this.route.paramMap.subscribe(params => {
         this.id = params.get("id")
-        // console.log('params1111:', JSON.stringify(params))
+        console.log('params1111:', JSON.stringify(params))
       });
       // console.log('dada1111', this.id);
 

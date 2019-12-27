@@ -23,9 +23,12 @@
     "@angular/router": "~8.2.11",
     "@material/dialog": "^4.0.0",
     "angularx-qrcode": "^1.7.0-beta.5",
+    "express": "^4.17.1",
     "hammerjs": "^2.0.8",
     "html-to-image": "^0.1.1",
+    "http": "0.0.0",
     "ngx-qrcode2": "0.0.9",
+    "path": "^0.12.7",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1"

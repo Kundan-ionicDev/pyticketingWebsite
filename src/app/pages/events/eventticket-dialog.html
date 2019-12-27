@@ -29,11 +29,21 @@
         <section class="qr-wrp">
         <ngx-qrcode [qrc-element-type]="elementType" [qrc-value]="data.QrCodeValue | json">
           </ngx-qrcode>
-          <a *ngIf="display" (click)="downloadImage()" download>Download</a>
         </section>
       </article>
     </div>
   </section>
+</div>
+
+  <div class="row">
+    <div class="col-lg-4 col-lg-offset-4">
+        <div class="input-group">
+          <input type="submit"  style="text-align: center;" data-toggle="tooltip" title="Click to book event ticket" data-placement="bottom"
+          (click)="downloadImage()"  value="Download Ticket"
+          class="btn btn-primary py-3 px-4">
+        </div><!-- /input-group -->
+    </div><!-- /.col-lg-4 -->
+</div>
 
 
   <style type="text/css">
@@ -242,4 +252,3 @@
     }
 
   </style>
-</div>
