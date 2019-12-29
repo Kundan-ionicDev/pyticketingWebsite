@@ -16,7 +16,7 @@ declare var $: any;
   styleUrls: ['./events.component.css']
 })
 export class EventsComponent implements OnInit {
-  qrcodename: string = "https://insider.in/arijit-singh-live-in-mumbai-one-night-only-sign-up-for-early-access-2020/event";
+  qrcodename: string = "http://ramdeshdev.com/event";
   title = 'generate-qrcode';
   elementType: 'url' | 'canvas' | 'img' = 'url';
   value: any;
@@ -37,7 +37,7 @@ export class EventsComponent implements OnInit {
     public api: PyticketService) {
       this.route.paramMap.subscribe(params => {
         this.id = params.get("id")
-        console.log('params1111:', JSON.stringify(params))
+        // console.log('params1111:', JSON.stringify(params))
       });
       // console.log('dada1111', this.id);
 
@@ -73,14 +73,10 @@ export class EventsComponent implements OnInit {
         link.href = dataUrl;
         link.click();
       });
-    // this.href = document.getElementsByTagName('img')[7].src;
   }
 
   generateQRCode() {
-    // 
-    // var result = document.getElementsByClassName("quantity").value;
-    // var result = document.getElementById("ticket").value;
-    console.log('dddd', this.profileForm.value);
+    // console.log('dddd', this.profileForm.value);
     if (this.profileForm.valid) {
       var result = (<HTMLInputElement>document.getElementById("myInput")).value;
       let params ={
@@ -101,7 +97,7 @@ export class EventsComponent implements OnInit {
         )
         .subscribe(
           res => {
-            // alert('HTTP response'+ JSON.stringify(res));
+            alert('HTTP response'+ JSON.stringify(res));
             //  $("#content").show();
             if (res.status == 200) {
               if (this.qrcodename == '') {
@@ -157,7 +153,7 @@ export class EventsComponent implements OnInit {
 
   initialize(eventId:any) {
     // Assign a value
-    this.myAngularxQrCode = 'http://www.pyticketing.com/events/arjitsingh.html';
+    // this.myAngularxQrCode = 'http://www.pyticketing.com/events/arjitsingh.html';
     this.api._getAPI('event/list?eventId='+eventId+'').pipe(
         catchError(err => {
           // alert('Handling error locally and rethrowing it...'+ JSON.stringify(err));
@@ -186,15 +182,15 @@ export class EventsComponent implements OnInit {
   templateUrl: './eventticket-dialog.html',
 })
 export class EventTicketDialog {
-  value: any;
+  // value: any;
   display: boolean;
   elementType: 'url' | 'canvas' | 'img' = 'url';
 
-  qrcodename: string = "http://pyticketingsystem.com/events/id=";
+  // qrcodename: string = "http://pyticketingsystem.com/events/";
   constructor(
     public dialogRef: MatDialogRef<EventTicketDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any) { 
-      this.value = this.qrcodename;
+      // this.value = this.qrcodename;
       this.display = true;
   }
 
