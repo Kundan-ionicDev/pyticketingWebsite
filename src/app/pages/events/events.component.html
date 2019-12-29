@@ -1,4 +1,5 @@
-<div class="hero-wrap" style="height: 65%;">
+
+<div class="hero-wrap" style="background-image: url('../../../assets/images/bg_2.jpg');" >
   <div class="overlay"></div>
   <div class="container">
     <div class="row no-gutters slider-text align-items-center justify-content-start">
@@ -6,7 +7,7 @@
         <h1 class="mb-4"> {{ eventData[0].title }}
           <br><span>{{ eventData[0].eventDescription }}</span></h1>
         <p class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span
-            class="icon-calendar mr-2"></span>{{ eventData[0].startDate | date:'EEE MMM dd yyyy hh:mm a' }} &nbsp;<b>To</b>&nbsp;  {{ eventData[0].endDate | date:'EEE MMM dd yyyy hh:mm a' }}</p>
+            class="icon-calendar mr-2"></span>{{ eventData[0].startDate | date:'EEE MMM dd yyyy hh:mm a' }} &nbsp;<b> - </b>&nbsp;  {{ eventData[0].endDate | date:'EEE MMM dd yyyy hh:mm a' }}</p>
         <div id="timer" class="d-flex">
           <div class="time" id="days"></div>
           <div class="time pl-3" id="hours"></div>
@@ -14,12 +15,12 @@
           <div class="time pl-3" id="seconds"></div>
         </div>
         <iframe id="gmap_canvas"
-          src="https://maps.google.com/maps?q=BKC Bandra east mumbai&t=&z=15&ie=UTF8&iwloc=&output=embed"
-          frameborder="0" scrolling="no" width="500px" height="300px"></iframe>
+          src="https://maps.google.com/maps?q=andheri&t=&z=15&ie=UTF8&iwloc=&output=embed"
+          frameborder="0" scrolling="no" width="100%" height="300px"></iframe>
       </div>
       <div class="col-lg-2 col"></div>
       <div class="col-lg-4 col-md-6 mt-0 mt-md-5">
-        <form [formGroup]="profileForm" class="request-form ftco-animate">
+        <form [formGroup]="profileForm" class="request-form ftco-animate fadeInUp ftco-animated" >
           <h2>Join Event</h2>
           <div class="form-group">
             <input type="text" class="form-control" data-toggle="tooltip" title="Enter your Full Name"
@@ -52,8 +53,6 @@
           </div>
           <div class="row">
             <div class="col-6">
-              <!-- <input type="button" class="form-control" data-toggle="tooltip" title="Enter document idnumber"
-              data-placement="bottom" value="Seats" placeholder="Id number"> -->
               <label class="form-control">Seats</label>
             </div>
             <div class="col-6" data-toggle="tooltip" title="Add number of seats" data-placement="bottom">
@@ -67,12 +66,6 @@
           <hr>
           <button type="submit" style="text-align: center;" *ngIf="display" (click)="downloadImage()"
             class="btn gradient-bg">Download E-Ticket</button>
-          <!-- <div class="form-group">
-            <div class="checkbox">
-              <label><input type="checkbox" value="" class="mr-2"> I have read and accept the terms and
-                conditions</label>
-            </div>
-          </div> -->
           <div class="form-group">
             <input type="submit" data-toggle="tooltip" title="Click to book event ticket" data-placement="bottom"
               (click)="generateQRCode()" [disabled]="!profileForm.valid" value="Book now"
@@ -96,6 +89,7 @@
           </div>
         </div>
       </div>
+      
     </div>
   </div>
 </section>

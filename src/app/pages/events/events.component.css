@@ -1,8 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
-.btn {
+ .btn {
     padding: 4px 30px;
 }
-.form-control{
+ /*.form-control{
     margin-bottom: 0 !important;
     height: auto;
 }
@@ -15,7 +15,7 @@ input[type="number"] {
   input[type=number]::-webkit-inner-spin-button,
   input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
-  }
+  } */
   
   .number-input {
     border: 2px solid #ddd;
@@ -57,7 +57,7 @@ input[type="number"] {
   
   .number-input input[type=number] {
     font-family: sans-serif;
-    max-width: 11rem;
+    max-width: 5rem;
     padding: .5rem;
     border: solid #ddd;
     border-width: 0 2px;
@@ -69,4 +69,4 @@ input[type="number"] {
 
   select.form-control:not([size]):not([multiple]){
     height: 35px;
-  }
+  } 

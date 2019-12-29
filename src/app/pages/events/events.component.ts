@@ -88,7 +88,7 @@ export class EventsComponent implements OnInit {
          "docId": this.profileForm.value.idnumber
       };
 
-      console.log('params:', params);
+      // console.log('params:', params);
       this.api._postAPI('event/book', params).pipe(
           catchError(err => {
             // alert('Handling error locally and rethrowing it...'+ JSON.stringify(err));
@@ -97,7 +97,7 @@ export class EventsComponent implements OnInit {
         )
         .subscribe(
           res => {
-            alert('HTTP response'+ JSON.stringify(res));
+            // alert('HTTP response'+ JSON.stringify(res));
             //  $("#content").show();
             if (res.status == 200) {
               if (this.qrcodename == '') {
