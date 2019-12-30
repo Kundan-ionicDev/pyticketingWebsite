@@ -41,11 +41,10 @@
           </div>
 
           <div class="col-lg-6">
-            <ngx-qrcode [qrc-element-type]="elementType" qrc-errorCorrectionLevel="L" [class]="aclass"
+            <ngx-qrcode [qrc-element-type]="elementType" qrc-errorCorrectionLevel="L" 
               [qrc-value]="data.QrCodeValue | json"></ngx-qrcode>
           </div>
         </div>
-        <!-- <a href="">{{ data.TicketId }}</a> -->
         <p><b>Ticket Number :</b> {{ data.TicketId }}</p>
       </section>
     </article>
