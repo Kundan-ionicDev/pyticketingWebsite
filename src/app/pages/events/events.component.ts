@@ -1,6 +1,4 @@
 import { Component,OnInit,Inject } from '@angular/core';
-// import { Router } from '@angular/router';
-
 import {  Router, ActivatedRoute,ParamMap } from '@angular/router';
 import { switchMap, map, filter, catchError } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
@@ -36,47 +34,29 @@ export class EventsComponent implements OnInit {
     public router: Router,
     public api: PyticketService) {
       this.route.paramMap.subscribe(params => {
-        this.id = params.get("id")
-        // console.log('params1111:', JSON.stringify(params))
+        this.id = params.get("id");
       });
-      // console.log('dada1111', this.id);
-
+      
       this.initialize(this.id);
       this.profileForm = new FormGroup({
-        Name: new FormControl('Kundan Sakpal', Validators.required),
-        EmailId: new FormControl('kundan@sp.com', Validators.required),
-        MobileNumber: new FormControl('9960097184', Validators.required),
-        Address: new FormControl('Chakala NAdheri', Validators.required),
-        idnumber: new FormControl('DCBPS8353E', Validators.required),
-        documentIdType :new FormControl('PANCARD', Validators.required),
+        Name: new FormControl('', Validators.required),
+        EmailId: new FormControl('', Validators.required),
+        MobileNumber: new FormControl('', Validators.required),
+        idnumber: new FormControl('', Validators.required),
+        documentIdType :new FormControl('', Validators.required),
         Quantity :new FormControl(1, Validators.required),
       });
-    // console.log('Log::', router.url );//+ this.route.snapshot.paramMap.get('id'));
   }
 
   ngOnInit() {
     $('[data-toggle="tooltip"]').tooltip();   
     this.route.paramMap.subscribe(params => {
-      this.id = params.get("id")
-      // console.log('params:', JSON.stringify(params))
+      this.id = params.get("id");
     });
-    // console.log('dada', this.id);
-  }
-
-  downloadImage() {
-    htmlToImage.toJpeg(document.getElementById('my-node'), {
-        quality: 0.95
-      })
-      .then(function (dataUrl) {
-        var link = document.createElement('a');
-        link.download = 'myticket.jpeg';
-        link.href = dataUrl;
-        link.click();
-      });
   }
 
   generateQRCode() {
-    // console.log('dddd', this.profileForm.value);
+    console.log('dddd', this.profileForm.value);
     if (this.profileForm.valid) {
       var result = (<HTMLInputElement>document.getElementById("myInput")).value;
       let params ={
@@ -84,6 +64,7 @@ export class EventsComponent implements OnInit {
          "eventId": this.id,
          "name": this.profileForm.value.Name,
          "email": this.profileForm.value.EmailId,
+         "mobileNumber":this.profileForm.value.MobileNumber,
          "docType": this.profileForm.value.documentIdType,
          "docId": this.profileForm.value.idnumber
       };
@@ -103,8 +84,9 @@ export class EventsComponent implements OnInit {
               if (this.qrcodename == '') {
                 this.display = false;
                 // alert("Please enter the name");
-                return;
+                // return;
               } else {
+                
                 // this.value = this.qrcodename + res._id;
                 this.value = [{
                   "UserId": res.data.userId,
@@ -123,17 +105,18 @@ export class EventsComponent implements OnInit {
                     "Address":this.eventData[0].address,
                     "TicketId": res.data.bookingId,
                     "EventId": res.data.eventId,
+                    "Seats":result,
                     "QrCodeValue":this.value
                   },
                   width: '800px',
+                  height: '500px',
                   hasBackdrop: true,
-                  autoFocus : false
+                  autoFocus : true
                 });
                
                 dialogRef.afterClosed().subscribe(result => {
                   this.value = result;
                 });
-            
               }
             } else {
               alert('Error!!!' + res.message)
@@ -152,17 +135,12 @@ export class EventsComponent implements OnInit {
   }
 
   initialize(eventId:any) {
-    // Assign a value
-    // this.myAngularxQrCode = 'http://www.pyticketing.com/events/arjitsingh.html';
     this.api._getAPI('event/list?eventId='+eventId+'').pipe(
         catchError(err => {
-          // alert('Handling error locally and rethrowing it...'+ JSON.stringify(err));
           return throwError(err);
         })
-      )
-      .subscribe(
+      ).subscribe(
         res => {
-          // alert('data' + JSON.stringify(res));
           if (res.status == 200) {
             this.eventData = res.data;
           } else {
@@ -182,15 +160,12 @@ export class EventsComponent implements OnInit {
   templateUrl: './eventticket-dialog.html',
 })
 export class EventTicketDialog {
-  // value: any;
   display: boolean;
   elementType: 'url' | 'canvas' | 'img' = 'url';
 
-  // qrcodename: string = "http://pyticketingsystem.com/events/";
   constructor(
     public dialogRef: MatDialogRef<EventTicketDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any) { 
-      // this.value = this.qrcodename;
       this.display = true;
   }
 
@@ -198,34 +173,19 @@ export class EventTicketDialog {
     this.dialogRef.close();
   }
 
-  makePdf() {
-    var DocumentContainer = document.getElementById('content');
-    var html = '<html><head>'+
-               '<link href="../../../assets/css/ticket.css" rel="stylesheet" type="text/css" />'+
-               '</head><body style="background:#ffffff;">'+
-               DocumentContainer.innerHTML+
-               '</body></html>';
-
-    var WindowObject = window.open("", "PrintWindow",
-    "width=auto,height=auto,top=50,left=50,toolbars=no,scrollbars=yes,status=no,resizable=yes, _blank");
-    WindowObject.document.writeln(DocumentContainer.innerHTML);
-    WindowObject.document.close();
-    WindowObject.focus();
-    WindowObject.print();
-    WindowObject.close();
-    
-    document.getElementById('print_link').style.display='block';
-  }
-  downloadImage() {
+  downloadImage(evName, evttitle,evTicketId) {
     htmlToImage.toJpeg(document.getElementById('content'), {
         quality: 0.95
       })
       .then(function (dataUrl) {
         var link = document.createElement('a');
-        link.download = 'myticket.jpeg';
+        link.download = evName +'_'+ evttitle +'_'+  evTicketId +'_'+ 'ticket.jpeg';
         link.href = dataUrl;
         link.click();
       });
-    // this.href = document.getElementsByTagName('img')[7].src;
+     
+      setTimeout(() => {
+        this.dialogRef.close();
+      }, 2000);
   }
 }

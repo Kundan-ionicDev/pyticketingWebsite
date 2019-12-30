@@ -18,7 +18,7 @@ input[type="number"] {
   } */
   
   .number-input {
-    border: 2px solid #ddd;
+    /* border: 2px solid #ddd; */
     display: inline-flex;
   }
   
@@ -57,8 +57,8 @@ input[type="number"] {
   
   .number-input input[type=number] {
     font-family: sans-serif;
-    max-width: 5rem;
-    padding: .5rem;
+    max-width: 3.5rem;
+    padding: .2rem;
     border: solid #ddd;
     border-width: 0 2px;
     font-size: 2rem;

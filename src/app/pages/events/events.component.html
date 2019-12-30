@@ -1,5 +1,5 @@
 
-<div class="hero-wrap" style="background-image: url('../../../assets/images/bg_2.jpg');" >
+<div class="hero-wrap" style="background-image: url('../../../assets/images/header-bg.jpg');color:#fff;" >
   <div class="overlay"></div>
   <div class="container">
     <div class="row no-gutters slider-text align-items-center justify-content-start">
@@ -41,12 +41,12 @@
                   data-placement="bottom" class="form-control">
                   <option value="default">-- Select a Id Proof --</option>
                   <option value="PANCARD">Pancard.</option>
-                  <option value="ADHAR">Adhar</option>
+                  <option value="ADHAAR">Adhar</option>
                   <option value="DL">Driving License</option>
                 </select>
               </div>
               <div class="col-6">
-                <input type="text" class="form-control" data-toggle="tooltip" title="Enter document idnumber"
+                <input type="text" class="form-control" data-toggle="tooltip" title="Enter document number"
                   data-placement="bottom" formControlName="idnumber" placeholder="Id number">
               </div>
             </div>
@@ -64,9 +64,7 @@
             </div>
           </div>
           <hr>
-          <button type="submit" style="text-align: center;" *ngIf="display" (click)="downloadImage()"
-            class="btn gradient-bg">Download E-Ticket</button>
-          <div class="form-group">
+          <div class="form-group" style="text-align: center;">
             <input type="submit" data-toggle="tooltip" title="Click to book event ticket" data-placement="bottom"
               (click)="generateQRCode()" [disabled]="!profileForm.valid" value="Book now"
               class="btn btn-primary py-3 px-4">
@@ -82,8 +80,10 @@
     <div class="row d-flex">
       <div class="col-md-6 d-flex align-self-stretch ftco-animate">
         <div class="media block-6 services d-block">
-          <div class="icon"><span class="flaticon-placeholder"></span></div>
-          <div class="media-body">
+          <div class="icon">
+            <span class="flaticon-placeholder"></span>
+          </div>
+          <div class="media-body" style="color:#fff;">
             <h3 class="heading mb-3">Venue</h3>
             <p> {{ eventData[0].address }}</p>
           </div>
