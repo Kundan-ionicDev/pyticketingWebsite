@@ -41,8 +41,7 @@
           </div>
 
           <div class="col-lg-6">
-            <ngx-qrcode [qrc-element-type]="elementType" qrc-errorCorrectionLevel="L" 
-              [qrc-value]="data.QrCodeValue | json"></ngx-qrcode>
+            <ngx-qrcode [qrc-element-type]="elementType" [qrc-value]="data.QrCodeValue | json"></ngx-qrcode>
           </div>
         </div>
         <p><b>Ticket Number :</b> {{ data.TicketId }}</p>

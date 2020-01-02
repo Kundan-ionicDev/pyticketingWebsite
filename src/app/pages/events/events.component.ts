@@ -27,6 +27,7 @@ export class EventsComponent implements OnInit {
   id: string;
   profileForm: FormGroup;
   ticket: number = 1;
+  eventmap: any;
   
   constructor(
     private matDialog: MatDialog,
@@ -56,7 +57,7 @@ export class EventsComponent implements OnInit {
   }
 
   generateQRCode() {
-    console.log('dddd', this.profileForm.value);
+    //console.log('dddd', this.profileForm.value);
     if (this.profileForm.valid) {
       var result = (<HTMLInputElement>document.getElementById("myInput")).value;
       let params ={
@@ -143,6 +144,11 @@ export class EventsComponent implements OnInit {
         res => {
           if (res.status == 200) {
             this.eventData = res.data;
+            this.eventmap = "https://maps.google.com/maps?q=" + this.eventData[0].address + "&t=&z=15&ie=UTF8&iwloc=&output=embed";
+            let Url: HTMLInputElement = document.getElementById("gmap_canvas") as HTMLInputElement;
+            Url.src = this.eventmap
+            // document.getElementById("gmap_canvas").src = this.eventmap;
+            // alert('this.eventmap' + this.eventmap);
           } else {
           }
         },
@@ -167,6 +173,7 @@ export class EventTicketDialog {
     public dialogRef: MatDialogRef<EventTicketDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any) { 
       this.display = true;
+      // this.downloadImage(data.Name, data.EventName,data.TicketId);
   }
 
   onNoClick(): void {
