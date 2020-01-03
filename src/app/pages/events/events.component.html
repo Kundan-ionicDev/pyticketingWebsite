@@ -14,7 +14,7 @@
           <div class="time pl-3" id="minutes"></div>
           <div class="time pl-3" id="seconds"></div>
         </div>
-        <iframe id="gmap_canvas" frameborder="0" scrolling="no" width="100%" height="300px"></iframe>
+        <!-- <iframe id="gmap_canvas" frameborder="0" scrolling="no" width="100%" height="300px"></iframe> -->
       </div>
       <div class="col-lg-2 col"></div>
       <div class="col-lg-4 col-md-6 mt-0 mt-md-5">
@@ -37,8 +37,8 @@
               <div class="col-6">
                 <select formControlName="documentIdType" data-toggle="tooltip" title="Select Document type"
                   data-placement="bottom" class="form-control">
-                  <option value="default">-- Select a Id Proof --</option>
-                  <option value="PANCARD">Pancard.</option>
+                  <option selected value="0">Select KYC Proof</option>
+                  <option value="PANCARD">Pancard</option>
                   <option value="ADHAAR">Adhar</option>
                   <option value="DL">Driving License</option>
                 </select>
@@ -91,4 +91,90 @@
     </div>
   </div>
 </section>
+
+<div class="homepage-next-events">
+  <div class="container">
+      <div class="row">
+          <div class="next-events-section-header">
+              <h2 class="entry-title">Our next events</h2>
+              <p>Vestibulum eget lacus at mauris sagittis varius. Etiam ut venenatis dui. Nullam tellus risus, pellentesque at facilisis et, scelerisque sit amet metus. Duis vel semper turpis, ac tempus libero. Maecenas id ultrices risus. Aenean nec ornare ipsum, lacinia.</p>
+          </div>
+      </div>
+
+      <div class="row">
+          <div class="col-12 col-sm-6 col-md-4">
+              <div class="next-event-wrap">
+                  <figure>
+                      <a href="#"><img src="../../../assets/images/header-bg.jpg" alt="1"></a>
+
+                      <div class="event-rating">8.9</div>
+                  </figure>
+
+                  <header class="entry-header">
+                      <h3 class="entry-title">U2 Concert in Detroitt</h3>
+
+                      <div class="posted-date">Saturday <span>Jan 27, 2020</span></div>
+                  </header>
+
+                  <div class="entry-content">
+                      <p>Vestibulum eget lacus at mauris sagittis varius. Etiam ut venenatis dui. Nullam tellus risus.</p>
+                  </div>
+
+                  <footer class="entry-footer">
+                      <!-- <a href="#">Buy Tikets</a> -->
+                      <input type="submit" value="Buy Tikets" class="btn btn-primary py-3 ">
+                  </footer>
+              </div>
+          </div>
+
+          <div class="col-12 col-sm-6 col-md-4">
+              <div class="next-event-wrap">
+                  <figure>
+                      <a href="#"><img src="../../../assets/images/header-bg.jpg" alt="1"></a>
+
+                      <div class="event-rating">7.9</div>
+                  </figure>
+
+                  <header class="entry-header">
+                      <h3 class="entry-title">TED Talk California</h3>
+
+                      <div class="posted-date">Saturday <span>Jan 27, 2020</span></div>
+                  </header>
+
+                  <div class="entry-content">
+                      <p>Eget lacus at mauris sagittis varius. Etiam ut ven enatis dui. Nullam tellus risus, pellentesque.</p>
+                  </div>
+
+                  <footer class="entry-footer">
+                    <input type="submit" value="Buy Tikets" class="btn btn-primary py-3 ">
+                  </footer>
+              </div>
+          </div>
+
+          <div class="col-12 col-sm-6 col-md-4">
+              <div class="next-event-wrap">
+                  <figure>
+                      <a href="#"><img src="../../../assets/images/header-bg.jpg" alt="1"></a>
+
+                      <div class="event-rating">9.9</div>
+                  </figure>
+
+                  <header class="entry-header">
+                      <h3 class="entry-title">Ultra Music Miami</h3>
+
+                      <div class="posted-date">Saturday <span>Jan 27, 2020</span></div>
+                  </header>
+
+                  <div class="entry-content">
+                      <p>Lacus at mauris sagittis varius. Etiam ut venenatis dui. Nullam tellus risus, pellentesque at facili.</p>
+                  </div>
+
+                  <footer class="entry-footer">
+                    <input type="submit" value="Buy Tikets" class="btn btn-primary py-3 ">
+                  </footer>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
 

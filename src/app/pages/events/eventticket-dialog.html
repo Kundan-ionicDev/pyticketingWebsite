@@ -1,12 +1,12 @@
 <div class="row" >
-  <div class="col-lg-8">
-    <h1>Events</h1>
+  <div class="col-lg-8" style="text-align:center;font-size:20px;">
+  <h1>Ticket Confirmation</h1>
   </div>
   <div class="col-lg-4">
-    <div class="input-group">
-      <input type="submit" (click)="downloadImage(data.Name,data.EventName,data.TicketId)" style="text-align: center;" value="Download & Close"
-        class="btn btn-primary py-3 px-4">
-    </div>
+    <input type="submit" (click)="downloadImage(data.Name,data.EventName,data.TicketId)" style="text-align: center;" value="Download"
+      class="btn btn-primary py-3 px-4">&nbsp;
+    <input type="submit" (click)="close()" style="text-align: center;" value="Close"
+    class="btn btn-primary py-3 px-4">
   </div>
 </div>
 <div id="content" style="background-color: #DADDE6;">
@@ -30,27 +30,42 @@
                 <span>{{ data.StartDate | date:'h:mm a' }} - {{ data.EndDate | date:'h:mm a' }}</span>
                 <span>Seats : {{ data.Seats }}</span>
               </time>
-
             </div>
-            <div class="even-info">
-              <i class="fa fa-map-marker"></i>
-              <p>
-                {{ data.Address }}
-              </p>
+            <div class="even-date">
+              <i class="fa fa-id-card-o"></i>
+              <time>
+                <span>{{ data.DocumentType }} - {{ data.DocumentId }}</span>
+            </time>
+            </div>
+            <div class="even-date">
+              <i class="fa fa-ticket"></i>
+              <time>
+                <b>Ticket Number :</b> {{ data.TicketId }}
+              </time>
             </div>
           </div>
-
           <div class="col-lg-6">
             <ngx-qrcode [qrc-element-type]="elementType" [qrc-value]="data.QrCodeValue | json"></ngx-qrcode>
           </div>
+          <div class="even-info">
+            <i class="fa fa-map-marker"></i>
+            <p>
+              {{ data.Address }}
+            </p>
+          </div>
         </div>
-        <p><b>Ticket Number :</b> {{ data.TicketId }}</p>
+        
+        <b style="color: #3C3C3C;">Note:</b>
+        <div class="container-fluid" style="color: #3C3C3C;">
+          <div class="row-fluid" style="text-transform: capitalize;">
+            <li>Ticket once booked cannot be cancelled or exchanged or refunded.</li>
+            <li>In case any tickets/passes are found to be tampered, the organizers reserve the right to refuse entry. Tampering of tickets/passes will strictly not be tolerated.</li>
+          </div>
+        </div>
       </section>
     </article>
   </section>
 </div>
-
-
 
 <style type="text/css">
   @import url('https://fonts.googleapis.com/css?family=Oswald');
@@ -200,7 +215,7 @@
   }
 
   .card-cont .even-info p {
-    padding: 30px 50px 0 0
+    padding: 5px 50px 0 0
   }
 
   .card-cont .even-date time span {

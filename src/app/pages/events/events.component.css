@@ -40,7 +40,9 @@ input[type="number"] {
     margin: 0;
     position: relative;
   }
-  
+  select.form-control:not([size]):not([multiple]){
+    height: auto;
+  }
   .number-input button:before,
   .number-input button:after {
     display: inline-block;

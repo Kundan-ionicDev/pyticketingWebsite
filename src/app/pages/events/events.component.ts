@@ -37,16 +37,19 @@ export class EventsComponent implements OnInit {
       this.route.paramMap.subscribe(params => {
         this.id = params.get("id");
       });
-      
       this.initialize(this.id);
-      this.profileForm = new FormGroup({
-        Name: new FormControl('', Validators.required),
-        EmailId: new FormControl('', Validators.required),
-        MobileNumber: new FormControl('', Validators.required),
-        idnumber: new FormControl('', Validators.required),
-        documentIdType :new FormControl('', Validators.required),
-        Quantity :new FormControl(1, Validators.required),
-      });
+      this.registerForm();
+  }
+
+  registerForm(){
+    this.profileForm = new FormGroup({
+      Name: new FormControl('', Validators.required),
+      EmailId: new FormControl('', Validators.required),
+      MobileNumber: new FormControl('', Validators.required),
+      idnumber: new FormControl('', Validators.required),
+      documentIdType :new FormControl('0', Validators.required),
+      Quantity :new FormControl(1, Validators.required),
+    });
   }
 
   ngOnInit() {
@@ -107,6 +110,8 @@ export class EventsComponent implements OnInit {
                     "TicketId": res.data.bookingId,
                     "EventId": res.data.eventId,
                     "Seats":result,
+                    "DocumentType": this.profileForm.value.documentIdType,
+                    "DocumentId":this.profileForm.value.idnumber,
                     "QrCodeValue":this.value
                   },
                   width: '800px',
@@ -117,6 +122,8 @@ export class EventsComponent implements OnInit {
                
                 dialogRef.afterClosed().subscribe(result => {
                   this.value = result;
+                  this.profileForm.reset();
+                  this.registerForm();
                 });
               }
             } else {
@@ -144,9 +151,9 @@ export class EventsComponent implements OnInit {
         res => {
           if (res.status == 200) {
             this.eventData = res.data;
-            this.eventmap = "https://maps.google.com/maps?q=" + this.eventData[0].address + "&t=&z=15&ie=UTF8&iwloc=&output=embed";
-            let Url: HTMLInputElement = document.getElementById("gmap_canvas") as HTMLInputElement;
-            Url.src = this.eventmap
+            // this.eventmap = "https://maps.google.com/maps?q=" + this.eventData[0].address + "&t=&z=15&ie=UTF8&iwloc=&output=embed";
+            // let Url: HTMLInputElement = document.getElementById("gmap_canvas") as HTMLInputElement;
+            // Url.src = this.eventmap
             // document.getElementById("gmap_canvas").src = this.eventmap;
             // alert('this.eventmap' + this.eventmap);
           } else {
@@ -176,7 +183,7 @@ export class EventTicketDialog {
       // this.downloadImage(data.Name, data.EventName,data.TicketId);
   }
 
-  onNoClick(): void {
+  close() {
     this.dialogRef.close();
   }
 
@@ -191,8 +198,8 @@ export class EventTicketDialog {
         link.click();
       });
      
-      setTimeout(() => {
-        this.dialogRef.close();
-      }, 2000);
+      // setTimeout(() => {
+      //   this.dialogRef.close();
+      // }, 2000);
   }
 }
