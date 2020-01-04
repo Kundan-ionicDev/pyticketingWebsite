@@ -90,7 +90,7 @@ export class EventsComponent implements OnInit {
                 // alert("Please enter the name");
                 // return;
               } else {
-                
+                alert('Thank you for registering.');
                 // this.value = this.qrcodename + res._id;
                 this.value = [{
                   "UserId": res.data.userId,
