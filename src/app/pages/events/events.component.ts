@@ -143,7 +143,9 @@ export class EventsComponent implements OnInit {
   }
 
   initialize(eventId:any) {
-    this.api._getAPI('event/list?eventId='+eventId+'').pipe(
+    // alert('eventId'+ eventId);
+    if(eventId !=null){
+      this.api._getAPI('event/list?eventId='+eventId+'').pipe(
         catchError(err => {
           return throwError(err);
         })
@@ -164,6 +166,39 @@ export class EventsComponent implements OnInit {
           }
         }
       );
+    }else{
+      this.api._getAPI('event/list').pipe(
+        catchError(err => {
+          return throwError(err);
+        })
+      ).subscribe(
+        res => {
+          if (res.status == 200) {
+            this.eventData = res.data;
+            this.id = this.eventData[0].eventId;
+            // alert('events' + JSON.stringify(this.eventData));
+            for(var i= 0; i< this.eventData; i++){
+              // alert(this.eventData);
+              if(res.data[i].startDate > Date()){
+                // alert('ssss');
+              }
+            }
+            //this.eventData = res.data;
+            // this.eventmap = "https://maps.google.com/maps?q=" + this.eventData[0].address + "&t=&z=15&ie=UTF8&iwloc=&output=embed";
+            // let Url: HTMLInputElement = document.getElementById("gmap_canvas") as HTMLInputElement;
+            // Url.src = this.eventmap
+            // document.getElementById("gmap_canvas").src = this.eventmap;
+            // alert('this.eventmap' + this.eventmap);
+          } else {
+          }
+        },
+        err => {
+          if (err.length > 0) {
+          }
+        }
+      );
+    }
+    
   }
 }
 
