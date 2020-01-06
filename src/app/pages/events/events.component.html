@@ -23,14 +23,26 @@
           <div class="form-group">
             <input type="text" class="form-control" data-toggle="tooltip" title="Enter your Full Name"
               data-placement="bottom" formControlName="Name" placeholder="Enter your Full Name">
+              <div *ngIf="submitted && f.Name.errors" class="alert-light">
+                <div *ngIf="f.Name.errors.required">Name is required</div>
+                <div *ngIf="f.Name.errors.email">Name must be a valid</div>
+              </div>
           </div>
           <div class="form-group">
             <input type="text" class="form-control" data-toggle="tooltip" title="Enter your EmailId"
               data-placement="bottom" formControlName="EmailId" placeholder="Enter your Email">
+              <div *ngIf="submitted && f.EmailId.errors" class="alert-light">
+                <div *ngIf="f.EmailId.errors.required">EmailId is required</div>
+                <div *ngIf="f.EmailId.errors.email">EmailId must be a valid</div>
+              </div>
           </div>
           <div class="form-group">
             <input type="text" class="form-control" data-toggle="tooltip" title="Enter your MobileNumber"
               data-placement="bottom" formControlName="MobileNumber" placeholder="Enter your Phone">
+              <div *ngIf="submitted && f.MobileNumber.errors" class="alert-light">
+                <div *ngIf="f.MobileNumber.errors.required">Mobile Number is required</div>
+                <div *ngIf="f.MobileNumber.errors.number">Mobile Number must be a valid</div>
+              </div>
           </div>
           <div class="form-group">
             <div class="row">
@@ -46,6 +58,10 @@
               <div class="col-6">
                 <input type="text" class="form-control" data-toggle="tooltip" title="Enter document number"
                   data-placement="bottom" formControlName="idnumber" placeholder="Id number">
+                  <div *ngIf="submitted && f.idnumber.errors" class="alert-light">
+                    <div *ngIf="f.idnumber.errors.required">KYC Number is required</div>
+                    <div *ngIf="f.idnumber.errors.text">KYC Number must be a valid</div>
+                  </div>
               </div>
             </div>
           </div>
@@ -64,7 +80,7 @@
           <hr>
           <div class="form-group" style="text-align: center;">
             <input type="submit" data-toggle="tooltip" title="Click to book event ticket" data-placement="bottom"
-              (click)="generateQRCode()" [disabled]="!profileForm.valid" value="Book now"
+              (click)="generateQRCode()"  value="Book now"
               class="btn btn-primary py-3 px-4">
           </div>
         </form>

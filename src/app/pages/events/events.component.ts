@@ -28,6 +28,7 @@ export class EventsComponent implements OnInit {
   profileForm: FormGroup;
   ticket: number = 1;
   eventmap: any;
+  submitted:boolean = false;
   
   constructor(
     private matDialog: MatDialog,
@@ -42,17 +43,24 @@ export class EventsComponent implements OnInit {
   }
 
   registerForm(){
+    
     this.profileForm = new FormGroup({
       Name: new FormControl('', Validators.required),
-      EmailId: new FormControl('', Validators.required),
-      MobileNumber: new FormControl('', Validators.required),
+      EmailId: new FormControl('', [Validators.required, Validators.email,Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]),
+      MobileNumber : new FormControl('', [Validators.required, Validators.pattern('[6-9]\\d{9}'), Validators.maxLength(10)]),
       idnumber: new FormControl('', Validators.required),
       documentIdType :new FormControl('0', Validators.required),
       Quantity :new FormControl(1, Validators.required),
     });
   }
 
+  // convenience getter for easy access to form fields
+  get f() { 
+    return this.profileForm.controls; 
+  }
+
   ngOnInit() {
+   
     $('[data-toggle="tooltip"]').tooltip();   
     this.route.paramMap.subscribe(params => {
       this.id = params.get("id");
@@ -60,7 +68,8 @@ export class EventsComponent implements OnInit {
   }
 
   generateQRCode() {
-    //console.log('dddd', this.profileForm.value);
+    this.submitted = true;
+    console.log('dddd', this.profileForm.value);
     if (this.profileForm.valid) {
       var result = (<HTMLInputElement>document.getElementById("myInput")).value;
       let params ={

@@ -2,6 +2,10 @@
  .btn {
     padding: 4px 30px;
 }
+.alert-light{
+  background-color: transparent;
+  color: red;
+}
  /*.form-control{
     margin-bottom: 0 !important;
     height: auto;
