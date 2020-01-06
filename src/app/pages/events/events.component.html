@@ -65,16 +65,18 @@
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-6">
-              <label class="form-control">Seats</label>
+          <div class="form-group">
+            <div class="row">
+            <div class="col-6 text-right align-items-center">
+              <span>Seats: </span>
             </div>
             <div class="col-6" data-toggle="tooltip" title="Add number of seats" data-placement="bottom">
               <div class="number-input">
-                <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()"></button>
+                <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="minus"></button>
                 <input class="quantity" id="myInput" formControlName="Quantity" type="number">
                 <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
               </div>
+            </div>
             </div>
           </div>
           <hr>
