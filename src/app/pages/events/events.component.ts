@@ -168,7 +168,6 @@ export class EventsComponent implements OnInit {
             // let Url: HTMLInputElement = document.getElementById("gmap_canvas") as HTMLInputElement;
             // Url.src = this.eventmap
             // document.getElementById("gmap_canvas").src = this.eventmap;
-            // alert('this.eventmap' + this.eventmap);
           } else {
           }
         },
@@ -187,11 +186,8 @@ export class EventsComponent implements OnInit {
           if (res.status == 200) {
             this.eventData = res.data;
             this.id = this.eventData[0].eventId;
-            // alert('events' + JSON.stringify(this.eventData));
             for(var i= 0; i< this.eventData; i++){
-              // alert(this.eventData);
               if(res.data[i].startDate > Date()){
-                // alert('ssss');
               }
             }
             //this.eventData = res.data;
