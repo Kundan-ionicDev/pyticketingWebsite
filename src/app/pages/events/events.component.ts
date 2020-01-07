@@ -134,8 +134,7 @@ export class EventsComponent implements OnInit {
                   this.value = result;
                   // this.profileForm.reset();
                   // this.profileForm.reset();
-                  this.profileForm.value.EmailId = '';
-                  this.profileForm.value.MobileNumber = '';
+                  this.registerForm();
                 });
               }
             } else {
