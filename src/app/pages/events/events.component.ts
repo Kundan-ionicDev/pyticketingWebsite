@@ -43,11 +43,11 @@ export class EventsComponent implements OnInit {
   }
 
   registerForm(){
-    
     this.profileForm = new FormGroup({
       Name: new FormControl('', Validators.required),
       EmailId: new FormControl('', [Validators.required, Validators.email,Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]),
-      MobileNumber : new FormControl('', [Validators.required, Validators.pattern('[6-9]\\d{9}'), Validators.maxLength(10)]),
+       MobileNumber : new FormControl('', Validators.required),
+      //MobileNumber:['',Validators.required],
       idnumber: new FormControl('', Validators.required),
       documentIdType :new FormControl('0', Validators.required),
       Quantity :new FormControl(1, Validators.required),
@@ -92,6 +92,7 @@ export class EventsComponent implements OnInit {
         .subscribe(
           res => {
             // alert('HTTP response'+ JSON.stringify(res));
+            
             //  $("#content").show();
             if (res.status == 200) {
               if (this.qrcodename == '') {
@@ -99,7 +100,7 @@ export class EventsComponent implements OnInit {
                 // alert("Please enter the name");
                 // return;
               } else {
-                alert('Thank you for registering.');
+                // alert('Thank you for registering.');
                 // this.value = this.qrcodename + res._id;
                 this.value = [{
                   "UserId": res.data.userId,
@@ -131,8 +132,10 @@ export class EventsComponent implements OnInit {
                
                 dialogRef.afterClosed().subscribe(result => {
                   this.value = result;
-                  this.profileForm.reset();
-                  this.registerForm();
+                  // this.profileForm.reset();
+                  // this.profileForm.reset();
+                  this.profileForm.value.EmailId = '';
+                  this.profileForm.value.MobileNumber = '';
                 });
               }
             } else {

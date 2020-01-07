@@ -37,10 +37,17 @@
               </div>
           </div>
           <div class="form-group">
-            <input type="text" class="form-control" data-toggle="tooltip" title="Enter your MobileNumber"
-              data-placement="bottom" formControlName="MobileNumber" placeholder="Enter your Phone">
+            <!-- <input type="text" class="form-control" data-toggle="tooltip" title="Enter your MobileNumber"
+              data-placement="bottom" formControlName="MobileNumber" placeholder="Enter your Phone"> -->
+              <input id="tel" data-toggle="tooltip"
+              title="Enter Contact Person Number !" placeholder="Enter Contact Person Number!" 
+              data-placement="bottom" class="form-control" phoneMask 
+              [preValue]="profileForm.value.MobileNumber"  
+              [phoneControl]="profileForm.controls['MobileNumber']" 
+              formControlName="MobileNumber" maxlength="14" 
+                  [ngClass]="(profileForm.controls['MobileNumber'].invalid)? 'errmsg' : 'validmsg'">	
               <div *ngIf="submitted && f.MobileNumber.errors" class="alert-light">
-                <div *ngIf="f.MobileNumber.errors.required">Mobile Number is required</div>
+                <div *ngIf="f.MobileNumber.errors.required">Mobile Number must be a valid</div>
                 <div *ngIf="f.MobileNumber.errors.number">Mobile Number must be a valid</div>
               </div>
           </div>
