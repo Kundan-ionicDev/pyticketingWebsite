@@ -19,6 +19,8 @@ import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PhoneMaskDirective } from './PhoneMaskDirective'; 
+import { PrivacypolicyComponent } from './pages/privacypolicy/privacypolicy.component';
+import { TermsconditionComponent } from './pages/termscondition/termscondition.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,9 @@ import { PhoneMaskDirective } from './PhoneMaskDirective';
     SettingsComponent,
     PageNotFoundComponent,
     EventTicketDialog,
-    PhoneMaskDirective
+    PhoneMaskDirective,
+    TermsconditionComponent,
+    PrivacypolicyComponent
   ],
 
   entryComponents: [

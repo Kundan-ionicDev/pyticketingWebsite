@@ -7,6 +7,8 @@ import { ContactusComponent } from './pages/contactus/contactus.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { SettingsComponent } from './pages/settings/settings.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
+import { PrivacypolicyComponent } from './pages/privacypolicy/privacypolicy.component';
+import { TermsconditionComponent } from './pages/termscondition/termscondition.component';
 
 
 const routes: Routes = 
@@ -17,8 +19,8 @@ const routes: Routes =
   { path: 'events', component: EventsComponent },
   { path: 'about', component: AboutComponent },
   { path: 'contact', component: ContactusComponent },
-  // { path: 'profile', component: ProfileComponent },
-  // { path: 'settings', component: SettingsComponent },
+  { path: 'termscondition', component: TermsconditionComponent },
+  { path: 'privacypolicy', component: PrivacypolicyComponent },
   { path: '**', component: PageNotFoundComponent }
 ];
 
