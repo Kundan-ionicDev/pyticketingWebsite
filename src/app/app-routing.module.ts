@@ -14,11 +14,11 @@ const routes: Routes =
   { path: '', redirectTo: 'events', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'events/:id/:name', component: EventsComponent },
-  // { path: 'events', component: EventsComponent },
+  { path: 'events', component: EventsComponent },
   { path: 'about', component: AboutComponent },
   { path: 'contact', component: ContactusComponent },
-  { path: 'profile', component: ProfileComponent },
-  { path: 'settings', component: SettingsComponent },
+  // { path: 'profile', component: ProfileComponent },
+  // { path: 'settings', component: SettingsComponent },
   { path: '**', component: PageNotFoundComponent }
 ];
 

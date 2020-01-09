@@ -18,6 +18,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PhoneMaskDirective } from './PhoneMaskDirective'; 
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ProfileComponent,
     SettingsComponent,
     PageNotFoundComponent,
-    EventTicketDialog
+    EventTicketDialog,
+    PhoneMaskDirective
   ],
 
   entryComponents: [

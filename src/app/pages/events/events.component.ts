@@ -1,6 +1,4 @@
 import { Component,OnInit,Inject } from '@angular/core';
-// import { Router } from '@angular/router';
-
 import {  Router, ActivatedRoute,ParamMap } from '@angular/router';
 import { switchMap, map, filter, catchError } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
@@ -16,7 +14,7 @@ declare var $: any;
   styleUrls: ['./events.component.css']
 })
 export class EventsComponent implements OnInit {
-  qrcodename: string = "https://insider.in/arijit-singh-live-in-mumbai-one-night-only-sign-up-for-early-access-2020/event";
+  qrcodename: string = "http://ramdeshdev.com/event";
   title = 'generate-qrcode';
   elementType: 'url' | 'canvas' | 'img' = 'url';
   value: any;
@@ -29,6 +27,8 @@ export class EventsComponent implements OnInit {
   id: string;
   profileForm: FormGroup;
   ticket: number = 1;
+  eventmap: any;
+  submitted:boolean = false;
   
   constructor(
     private matDialog: MatDialog,
@@ -36,50 +36,39 @@ export class EventsComponent implements OnInit {
     public router: Router,
     public api: PyticketService) {
       this.route.paramMap.subscribe(params => {
-        this.id = params.get("id")
-        // console.log('params1111:', JSON.stringify(params))
+        this.id = params.get("id");
       });
-      // console.log('dada1111', this.id);
-
       this.initialize(this.id);
-      this.profileForm = new FormGroup({
-        Name: new FormControl('Kundan Sakpal', Validators.required),
-        EmailId: new FormControl('kundan@sp.com', Validators.required),
-        MobileNumber: new FormControl('9960097184', Validators.required),
-        Address: new FormControl('Chakala NAdheri', Validators.required),
-        idnumber: new FormControl('DCBPS8353E', Validators.required),
-        documentIdType :new FormControl('PANCARD', Validators.required),
-        Quantity :new FormControl(1, Validators.required),
-      });
-    // console.log('Log::', router.url );//+ this.route.snapshot.paramMap.get('id'));
+      this.registerForm();
+  }
+
+  registerForm(){
+    this.profileForm = new FormGroup({
+      Name: new FormControl('', Validators.required),
+      EmailId: new FormControl('', [Validators.required, Validators.email,Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]),
+       MobileNumber : new FormControl('', Validators.required),
+      //MobileNumber:['',Validators.required],
+      idnumber: new FormControl('', Validators.required),
+      documentIdType :new FormControl('0', Validators.required),
+      Quantity :new FormControl(1, Validators.required),
+    });
+  }
+
+  // convenience getter for easy access to form fields
+  get f() { 
+    return this.profileForm.controls; 
   }
 
   ngOnInit() {
+   
     $('[data-toggle="tooltip"]').tooltip();   
     this.route.paramMap.subscribe(params => {
-      this.id = params.get("id")
-      // console.log('params:', JSON.stringify(params))
+      this.id = params.get("id");
     });
-    // console.log('dada', this.id);
-  }
-
-  downloadImage() {
-    htmlToImage.toJpeg(document.getElementById('my-node'), {
-        quality: 0.95
-      })
-      .then(function (dataUrl) {
-        var link = document.createElement('a');
-        link.download = 'myticket.jpeg';
-        link.href = dataUrl;
-        link.click();
-      });
-    // this.href = document.getElementsByTagName('img')[7].src;
   }
 
   generateQRCode() {
-    // 
-    // var result = document.getElementsByClassName("quantity").value;
-    // var result = document.getElementById("ticket").value;
+    this.submitted = true;
     console.log('dddd', this.profileForm.value);
     if (this.profileForm.valid) {
       var result = (<HTMLInputElement>document.getElementById("myInput")).value;
@@ -88,11 +77,12 @@ export class EventsComponent implements OnInit {
          "eventId": this.id,
          "name": this.profileForm.value.Name,
          "email": this.profileForm.value.EmailId,
+         "mobileNumber":this.profileForm.value.MobileNumber,
          "docType": this.profileForm.value.documentIdType,
          "docId": this.profileForm.value.idnumber
       };
 
-      console.log('params:', params);
+      // console.log('params:', params);
       this.api._postAPI('event/book', params).pipe(
           catchError(err => {
             // alert('Handling error locally and rethrowing it...'+ JSON.stringify(err));
@@ -102,13 +92,15 @@ export class EventsComponent implements OnInit {
         .subscribe(
           res => {
             // alert('HTTP response'+ JSON.stringify(res));
+            
             //  $("#content").show();
             if (res.status == 200) {
               if (this.qrcodename == '') {
                 this.display = false;
                 // alert("Please enter the name");
-                return;
+                // return;
               } else {
+                // alert('Thank you for registering.');
                 // this.value = this.qrcodename + res._id;
                 this.value = [{
                   "UserId": res.data.userId,
@@ -127,17 +119,23 @@ export class EventsComponent implements OnInit {
                     "Address":this.eventData[0].address,
                     "TicketId": res.data.bookingId,
                     "EventId": res.data.eventId,
+                    "Seats":result,
+                    "DocumentType": this.profileForm.value.documentIdType,
+                    "DocumentId":this.profileForm.value.idnumber,
                     "QrCodeValue":this.value
                   },
                   width: '800px',
+                  height: '500px',
                   hasBackdrop: true,
-                  autoFocus : false
+                  autoFocus : true
                 });
                
                 dialogRef.afterClosed().subscribe(result => {
                   this.value = result;
+                  // this.profileForm.reset();
+                  // this.profileForm.reset();
+                  this.registerForm();
                 });
-            
               }
             } else {
               alert('Error!!!' + res.message)
@@ -156,19 +154,20 @@ export class EventsComponent implements OnInit {
   }
 
   initialize(eventId:any) {
-    // Assign a value
-    this.myAngularxQrCode = 'http://www.pyticketing.com/events/arjitsingh.html';
-    this.api._getAPI('event/list?eventId='+eventId+'').pipe(
+    // alert('eventId'+ eventId);
+    if(eventId !=null){
+      this.api._getAPI('event/list?eventId='+eventId+'').pipe(
         catchError(err => {
-          // alert('Handling error locally and rethrowing it...'+ JSON.stringify(err));
           return throwError(err);
         })
-      )
-      .subscribe(
+      ).subscribe(
         res => {
-          // alert('data' + JSON.stringify(res));
           if (res.status == 200) {
             this.eventData = res.data;
+            // this.eventmap = "https://maps.google.com/maps?q=" + this.eventData[0].address + "&t=&z=15&ie=UTF8&iwloc=&output=embed";
+            // let Url: HTMLInputElement = document.getElementById("gmap_canvas") as HTMLInputElement;
+            // Url.src = this.eventmap
+            // document.getElementById("gmap_canvas").src = this.eventmap;
           } else {
           }
         },
@@ -177,6 +176,36 @@ export class EventsComponent implements OnInit {
           }
         }
       );
+    }else{
+      this.api._getAPI('event/list').pipe(
+        catchError(err => {
+          return throwError(err);
+        })
+      ).subscribe(
+        res => {
+          if (res.status == 200) {
+            this.eventData = res.data;
+            this.id = this.eventData[0].eventId;
+            for(var i= 0; i< this.eventData; i++){
+              if(res.data[i].startDate > Date()){
+              }
+            }
+            //this.eventData = res.data;
+            // this.eventmap = "https://maps.google.com/maps?q=" + this.eventData[0].address + "&t=&z=15&ie=UTF8&iwloc=&output=embed";
+            // let Url: HTMLInputElement = document.getElementById("gmap_canvas") as HTMLInputElement;
+            // Url.src = this.eventmap
+            // document.getElementById("gmap_canvas").src = this.eventmap;
+            // alert('this.eventmap' + this.eventmap);
+          } else {
+          }
+        },
+        err => {
+          if (err.length > 0) {
+          }
+        }
+      );
+    }
+    
   }
 }
 
@@ -186,50 +215,33 @@ export class EventsComponent implements OnInit {
   templateUrl: './eventticket-dialog.html',
 })
 export class EventTicketDialog {
-  value: any;
   display: boolean;
   elementType: 'url' | 'canvas' | 'img' = 'url';
 
-  qrcodename: string = "http://pyticketingsystem.com/events/id=";
   constructor(
     public dialogRef: MatDialogRef<EventTicketDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any) { 
-      this.value = this.qrcodename;
       this.display = true;
+      // this.downloadImage(data.Name, data.EventName,data.TicketId);
   }
 
-  onNoClick(): void {
+  close() {
     this.dialogRef.close();
   }
 
-  makePdf() {
-    var DocumentContainer = document.getElementById('content');
-    var html = '<html><head>'+
-               '<link href="../../../assets/css/ticket.css" rel="stylesheet" type="text/css" />'+
-               '</head><body style="background:#ffffff;">'+
-               DocumentContainer.innerHTML+
-               '</body></html>';
-
-    var WindowObject = window.open("", "PrintWindow",
-    "width=auto,height=auto,top=50,left=50,toolbars=no,scrollbars=yes,status=no,resizable=yes, _blank");
-    WindowObject.document.writeln(DocumentContainer.innerHTML);
-    WindowObject.document.close();
-    WindowObject.focus();
-    WindowObject.print();
-    WindowObject.close();
-    
-    document.getElementById('print_link').style.display='block';
-  }
-  downloadImage() {
+  downloadImage(evName, evttitle,evTicketId) {
     htmlToImage.toJpeg(document.getElementById('content'), {
         quality: 0.95
       })
       .then(function (dataUrl) {
         var link = document.createElement('a');
-        link.download = 'myticket.jpeg';
+        link.download = evName +'_'+ evttitle +'_'+  evTicketId +'_'+ 'ticket.jpeg';
         link.href = dataUrl;
         link.click();
       });
-    // this.href = document.getElementsByTagName('img')[7].src;
+     
+      // setTimeout(() => {
+      //   this.dialogRef.close();
+      // }, 2000);
   }
 }

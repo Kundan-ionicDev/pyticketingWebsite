@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, tap, map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PyticketService {
-  apiURL: string = "http://localhost:8000/api/";
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
@@ -16,11 +16,12 @@ export class PyticketService {
 
   constructor(
     private http: HttpClient,
-  ) {}
+  ) {
+  }
 
   // Calling POST Method's 
   _postAPI(methodname: string, params: any): Observable < any > {
-    return this.http.post <any> (this.apiURL + methodname, params, this.httpOptions).pipe(
+    return this.http.post <any> (environment.apiUrl + methodname, params, this.httpOptions).pipe(
       tap(_ =>
         this.log(methodname)),
       catchError(
@@ -32,7 +33,7 @@ export class PyticketService {
 
   // Calling GET Method's
   _getAPI(methodname: string): Observable < any > {
-    return this.http.get <any> (this.apiURL + methodname, this.httpOptions).pipe(
+    return this.http.get <any> (environment.apiUrl + methodname, this.httpOptions).pipe(
       tap(_ => this.log(methodname)),
       catchError(this.handleError('login', []))
     );
