@@ -1,0 +1,146 @@
+<div>
+    <form [formGroup]="profileForm" class="request-form ftco-animate fadeInUp ">
+        <h2>Join Event</h2>
+        <div class="form-group">
+          <input type="text" class="form-control" data-toggle="tooltip" title="Enter your Full Name"
+            data-placement="bottom" formControlName="Name" placeholder="Enter your Full Name">
+          <div *ngIf="submitted && f.Name.errors" class="alert-light">
+            <div *ngIf="f.Name.errors.required">Name is required</div>
+            <div *ngIf="f.Name.errors.email">Name must be a valid</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" data-toggle="tooltip" title="Enter your EmailId"
+            data-placement="bottom" formControlName="EmailId" placeholder="Enter your Email">
+          <div *ngIf="submitted && f.EmailId.errors" class="alert-light">
+            <div *ngIf="f.EmailId.errors.required">EmailId is required</div>
+            <div *ngIf="f.EmailId.errors.email">EmailId must be a valid</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <!-- <input type="text" class="form-control" data-toggle="tooltip" title="Enter your MobileNumber"
+            data-placement="bottom" formControlName="MobileNumber" placeholder="Enter your Phone"> -->
+          <input id="tel" data-toggle="tooltip" title="Enter Contact Person Number !"
+            placeholder="Enter Contact Person Number!" data-placement="bottom" class="form-control" phoneMask
+            [preValue]="profileForm.value.MobileNumber" [phoneControl]="profileForm.controls['MobileNumber']"
+            formControlName="MobileNumber" maxlength="14"
+            [ngClass]="(profileForm.controls['MobileNumber'].invalid)? 'errmsg' : 'validmsg'">
+          <div *ngIf="submitted && f.MobileNumber.errors" class="alert-light">
+            <div *ngIf="f.MobileNumber.errors.required">Mobile Number must be a valid</div>
+            <div *ngIf="f.MobileNumber.errors.number">Mobile Number must be a valid</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-6">
+              <select formControlName="documentIdType" data-toggle="tooltip" title="Select Document type"
+                data-placement="bottom" class="form-control">
+                <option selected value="0">Select KYC Proof</option>
+                <option value="PANCARD">Pancard</option>
+                <option value="ADHAAR">Adhar</option>
+                <option value="DL">Driving License</option>
+              </select>
+            </div>
+            <div class="col-6">
+              <input type="text" class="form-control" data-toggle="tooltip" title="Enter document number"
+                data-placement="bottom" formControlName="idnumber" placeholder="Id number">
+              <div *ngIf="submitted && f.idnumber.errors" class="alert-light">
+                <div *ngIf="f.idnumber.errors.required">KYC Number is required</div>
+                <div *ngIf="f.idnumber.errors.text">KYC Number must be a valid</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+              <div class="col-6 text-right align-items-center">
+                <span>Seats: </span>
+              </div>
+              <div class="col-6" data-toggle="tooltip" title="Add number of seats" data-placement="bottom">
+                <div class="number-input">
+                  <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
+                    class="minus"></button>
+                  <input class="quantity" id="myInput" formControlName="Quantity" type="number">
+                  <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        <hr>
+        <div class="form-group" style="text-align: center;">
+          <input type="submit" data-toggle="tooltip" title="Click to book event ticket" data-placement="bottom"
+            (click)="BookTicket()" value="Book now" class="btn btn-primary py-3 px-4">
+        </div>
+      </form>
+</div>
+
+<style>
+.btn {
+    padding: 4px 30px;
+}
+.alert-light{
+  background-color: transparent;
+  color: red;
+}
+  .number-input {
+    /* border: 2px solid #ddd; */
+    display: inline-flex;
+  }
+  
+  .number-input,
+  .number-input * {
+    box-sizing: border-box;
+  }
+  
+  .number-input button {
+    outline:none;
+    -webkit-appearance: none;
+    background-color: #CCB;
+    border: none;
+    align-items: center;
+    justify-content: center;
+    width: 3.5rem;
+    height: 2.4rem;
+    cursor: pointer;
+    margin: 0;
+    position: relative;
+  }
+  select.form-control:not([size]):not([multiple]){
+    height: auto;
+  }
+  .number-input button:before,
+  .number-input button:after {
+    display: inline-block;
+    position: absolute;
+    content: '';
+    width: 1rem;
+    height: 2px;
+    background-color: #212121;
+    transform: translate(-50%, -50%);
+  }
+  .number-input button.plus:after {
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+  
+  .number-input input[type=number] {
+    font-family: sans-serif;
+    max-width: 3.5rem;
+    padding: .2rem;
+    border: solid #ddd;
+    border-width: 0 2px;
+    font-size: 1rem;
+    height: 2.4rem;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  select.form-control:not([size]):not([multiple]){
+    height: 35px;
+  } 
+
+  button.minus{
+    border-radius: 4px 0 0 4px;
+  }
+  button.plus{
+    border-radius: 0 4px 4px 0;
+  }</style>

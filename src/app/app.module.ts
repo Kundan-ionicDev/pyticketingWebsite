@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
-import { EventsComponent, EventTicketDialog } from './pages/events/events.component';
+import { EventsComponent, EventTicketDialog,RegisterEventDialog } from './pages/events/events.component';
 import { AboutComponent } from './pages/about/about.component';
 import { ContactusComponent } from './pages/contactus/contactus.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -35,13 +35,14 @@ import { TermsconditionComponent } from './pages/termscondition/termscondition.c
     SettingsComponent,
     PageNotFoundComponent,
     EventTicketDialog,
+    RegisterEventDialog,
     PhoneMaskDirective,
     TermsconditionComponent,
     PrivacypolicyComponent
   ],
 
   entryComponents: [
-    EventTicketDialog
+    EventTicketDialog,RegisterEventDialog
   ],
 
   imports: [

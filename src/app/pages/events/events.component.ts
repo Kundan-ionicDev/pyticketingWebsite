@@ -29,6 +29,7 @@ export class EventsComponent implements OnInit {
   ticket: number = 1;
   eventmap: any;
   submitted:boolean = false;
+  alleventData: any;
   
   constructor(
     private matDialog: MatDialog,
@@ -39,7 +40,7 @@ export class EventsComponent implements OnInit {
         this.id = params.get("id");
       });
       this.initialize(this.id);
-      this.registerForm();
+      
   }
 
   registerForm(){
@@ -47,7 +48,6 @@ export class EventsComponent implements OnInit {
       Name: new FormControl('', Validators.required),
       EmailId: new FormControl('', [Validators.required, Validators.email,Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]),
        MobileNumber : new FormControl('', Validators.required),
-      //MobileNumber:['',Validators.required],
       idnumber: new FormControl('', Validators.required),
       documentIdType :new FormControl('0', Validators.required),
       Quantity :new FormControl(1, Validators.required),
@@ -60,7 +60,7 @@ export class EventsComponent implements OnInit {
   }
 
   ngOnInit() {
-   
+    this.registerForm();
     $('[data-toggle="tooltip"]').tooltip();   
     this.route.paramMap.subscribe(params => {
       this.id = params.get("id");
@@ -153,6 +153,23 @@ export class EventsComponent implements OnInit {
 
   }
 
+  registerForEvent(eventdetail:any){
+    const dialogRef = this.matDialog.open(RegisterEventDialog, {
+      data: 
+      {
+        "Name": eventdetail
+      },
+      width: '800px',
+      height: '500px',
+      hasBackdrop: true,
+      autoFocus : true
+    });
+   
+    dialogRef.afterClosed().subscribe(result => {
+      this.value = result;
+    });
+  }
+
   initialize(eventId:any) {
     // alert('eventId'+ eventId);
     if(eventId !=null){
@@ -164,38 +181,6 @@ export class EventsComponent implements OnInit {
         res => {
           if (res.status == 200) {
             this.eventData = res.data;
-            // this.eventmap = "https://maps.google.com/maps?q=" + this.eventData[0].address + "&t=&z=15&ie=UTF8&iwloc=&output=embed";
-            // let Url: HTMLInputElement = document.getElementById("gmap_canvas") as HTMLInputElement;
-            // Url.src = this.eventmap
-            // document.getElementById("gmap_canvas").src = this.eventmap;
-          } else {
-          }
-        },
-        err => {
-          if (err.length > 0) {
-          }
-        }
-      );
-    }else{
-      this.api._getAPI('event/list').pipe(
-        catchError(err => {
-          return throwError(err);
-        })
-      ).subscribe(
-        res => {
-          if (res.status == 200) {
-            this.eventData = res.data;
-            this.id = this.eventData[0].eventId;
-            for(var i= 0; i< this.eventData; i++){
-              if(res.data[i].startDate > Date()){
-              }
-            }
-            //this.eventData = res.data;
-            // this.eventmap = "https://maps.google.com/maps?q=" + this.eventData[0].address + "&t=&z=15&ie=UTF8&iwloc=&output=embed";
-            // let Url: HTMLInputElement = document.getElementById("gmap_canvas") as HTMLInputElement;
-            // Url.src = this.eventmap
-            // document.getElementById("gmap_canvas").src = this.eventmap;
-            // alert('this.eventmap' + this.eventmap);
           } else {
           }
         },
@@ -205,7 +190,132 @@ export class EventsComponent implements OnInit {
         }
       );
     }
+
+    this.api._getAPI('event/list').pipe(
+      catchError(err => {
+        return throwError(err);
+      })
+    ).subscribe(
+      res => {
+        if (res.status == 200) {
+          this.alleventData = res.data;
+          this.eventData = res.data;
+          // this.id = this.eventData[0].eventId;
+        } else {
+        }
+      },
+      err => {
+        if (err.length > 0) {
+        }
+      }
+    );
     
+  }
+}
+
+@Component({
+  selector : 'eventregister-dialog',
+  templateUrl:'./eventregister-dialog.html'
+})
+
+export class RegisterEventDialog {
+  display: boolean;
+  elementType: 'url' | 'canvas' | 'img' = 'url';
+  profileForm: FormGroup;
+  
+  submitted: boolean;
+  qrcodename: string;
+  value: any;
+  eventData: any;
+
+  constructor(
+    public api: PyticketService,
+    private matDialog: MatDialog,
+    public dialogRef: MatDialogRef<RegisterEventDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any) { 
+      this.profileForm = new FormGroup({
+        Name: new FormControl('', Validators.required),
+        EmailId: new FormControl('', [Validators.required, Validators.email,Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]),
+         MobileNumber : new FormControl('', Validators.required),
+        idnumber: new FormControl('', Validators.required),
+        documentIdType :new FormControl('0', Validators.required),
+        Quantity :new FormControl(1, Validators.required),
+      });
+      this.eventData = data;
+      // console.log('Data' , JSON.stringify(data));
+  }
+
+  get f() { 
+    return this.profileForm.controls; 
+  }
+
+  BookTicket() {
+    this.submitted = true;
+    console.log('dddd', this.profileForm.value + JSON.stringify(this.eventData) + this.eventData.Name.eventId);
+    if (this.profileForm.valid) {
+      var result = (<HTMLInputElement>document.getElementById("myInput")).value;
+      let params ={
+        "totalTickets": result,
+         "eventId": this.eventData.Name.eventId,
+         "name": this.profileForm.value.Name,
+         "email": this.profileForm.value.EmailId,
+         "mobileNumber":this.profileForm.value.MobileNumber,
+         "docType": this.profileForm.value.documentIdType,
+         "docId": this.profileForm.value.idnumber
+      };
+
+      // console.log('params:', params);
+      this.api._postAPI('event/book', params).subscribe(
+          res => {
+            if (res.status == 200) {
+              if (this.qrcodename == '') {
+                this.display = false;
+              } else {
+                this.value = [{
+                  "UserId": res.data.userId,
+                  "TicketId": res.data.bookingId,
+                  "EventId": res.data.eventId,
+                }];
+                const dialogRef = this.matDialog.open(EventTicketDialog, {
+                  data: 
+                  {
+                    "Name": this.profileForm.value.Name,
+                    "EventName": this.eventData.Name.title,
+                    "EventDescription": this.eventData.Name.eventDescription,
+                    "StartDate": this.eventData.Name.startDate,
+                    "EndDate": this.eventData.Name.endDate,
+                    "Address":this.eventData.Name.address,
+                    "TicketId": res.data.bookingId,
+                    "EventId": res.data.eventId,
+                    "Seats":result,
+                    "DocumentType": this.profileForm.value.documentIdType,
+                    "DocumentId":this.profileForm.value.idnumber,
+                    "QrCodeValue":this.value
+                  },
+                  width: '800px',
+                  height: '500px',
+                  hasBackdrop: true,
+                  autoFocus : true
+                });
+               
+                dialogRef.afterClosed().subscribe(result => {
+                  this.value = result;
+                });
+              }
+            } else {
+              alert('Error!!!' + res.message)
+            }
+          },
+          err => {
+            if (err.length > 0) {
+              // alert('HTTP Error'+ err)
+            }
+          }
+        );
+    } else {
+      alert('Please provide valid details')
+    }
+
   }
 }
 
@@ -217,11 +327,13 @@ export class EventsComponent implements OnInit {
 export class EventTicketDialog {
   display: boolean;
   elementType: 'url' | 'canvas' | 'img' = 'url';
+  
 
   constructor(
     public dialogRef: MatDialogRef<EventTicketDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any) { 
       this.display = true;
+      
       // this.downloadImage(data.Name, data.EventName,data.TicketId);
   }
 

@@ -1,5 +1,4 @@
-
-<div class="hero-wrap" style="background-image: url('../../../assets/images/header-bg.jpg');color:#fff;" >
+<div class="hero-wrap" style="background-image: url('../../../assets/images/header-bg.jpg');color:#fff;">
   <div class="overlay"></div>
   <div class="container">
     <div class="row no-gutters slider-text align-items-center justify-content-start">
@@ -7,49 +6,45 @@
         <h1 class="mb-4"> {{ eventData[0].title }}
           <br><span>{{ eventData[0].eventDescription }}</span></h1>
         <p class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span
-            class="icon-calendar mr-2"></span>{{ eventData[0].startDate | date:'EEE MMM dd yyyy hh:mm a' }} &nbsp;<b> - </b>&nbsp;  {{ eventData[0].endDate | date:'EEE MMM dd yyyy hh:mm a' }}</p>
+            class="icon-calendar mr-2"></span>{{ eventData[0].startDate | date:'EEE MMM dd yyyy hh:mm a' }} &nbsp;<b> -
+          </b>&nbsp; {{ eventData[0].endDate | date:'EEE MMM dd yyyy hh:mm a' }}</p>
         <div id="timer" class="d-flex">
           <div class="time" id="days"></div>
           <div class="time pl-3" id="hours"></div>
           <div class="time pl-3" id="minutes"></div>
           <div class="time pl-3" id="seconds"></div>
-        </div>
-        <!-- <iframe id="gmap_canvas" frameborder="0" scrolling="no" width="100%" height="300px"></iframe> -->
+        </div>  
       </div>
       <div class="col-lg-2 col"></div>
       <div class="col-lg-4 col-md-6 mt-0 mt-md-5">
-        <form [formGroup]="profileForm" class="request-form ftco-animate fadeInUp ftco-animated" >
+        <form [formGroup]="profileForm" class="request-form ftco-animate fadeInUp ftco-animated">
           <h2>Join Event</h2>
           <div class="form-group">
             <input type="text" class="form-control" data-toggle="tooltip" title="Enter your Full Name"
               data-placement="bottom" formControlName="Name" placeholder="Enter your Full Name">
-              <div *ngIf="submitted && f.Name.errors" class="alert-light">
-                <div *ngIf="f.Name.errors.required">Name is required</div>
-                <div *ngIf="f.Name.errors.email">Name must be a valid</div>
-              </div>
+            <div *ngIf="submitted && f.Name.errors" class="alert-light">
+              <div *ngIf="f.Name.errors.required">Name is required</div>
+              <div *ngIf="f.Name.errors.email">Name must be a valid</div>
+            </div>
           </div>
           <div class="form-group">
             <input type="text" class="form-control" data-toggle="tooltip" title="Enter your EmailId"
               data-placement="bottom" formControlName="EmailId" placeholder="Enter your Email">
-              <div *ngIf="submitted && f.EmailId.errors" class="alert-light">
-                <div *ngIf="f.EmailId.errors.required">EmailId is required</div>
-                <div *ngIf="f.EmailId.errors.email">EmailId must be a valid</div>
-              </div>
+            <div *ngIf="submitted && f.EmailId.errors" class="alert-light">
+              <div *ngIf="f.EmailId.errors.required">EmailId is required</div>
+              <div *ngIf="f.EmailId.errors.email">EmailId must be a valid</div>
+            </div>
           </div>
           <div class="form-group">
-            <!-- <input type="text" class="form-control" data-toggle="tooltip" title="Enter your MobileNumber"
-              data-placement="bottom" formControlName="MobileNumber" placeholder="Enter your Phone"> -->
-              <input id="tel" data-toggle="tooltip"
-              title="Enter Contact Person Number !" placeholder="Enter Contact Person Number!" 
-              data-placement="bottom" class="form-control" phoneMask 
-              [preValue]="profileForm.value.MobileNumber"  
-              [phoneControl]="profileForm.controls['MobileNumber']" 
-              formControlName="MobileNumber" maxlength="14" 
-                  [ngClass]="(profileForm.controls['MobileNumber'].invalid)? 'errmsg' : 'validmsg'">	
-              <div *ngIf="submitted && f.MobileNumber.errors" class="alert-light">
-                <div *ngIf="f.MobileNumber.errors.required">Mobile Number must be a valid</div>
-                <div *ngIf="f.MobileNumber.errors.number">Mobile Number must be a valid</div>
-              </div>
+            <input id="tel" data-toggle="tooltip" title="Enter Contact Person Number !"
+              placeholder="Enter Contact Person Number!" data-placement="bottom" class="form-control" phoneMask
+              [preValue]="profileForm.value.MobileNumber" [phoneControl]="profileForm.controls['MobileNumber']"
+              formControlName="MobileNumber" maxlength="14"
+              [ngClass]="(profileForm.controls['MobileNumber'].invalid)? 'errmsg' : 'validmsg'">
+            <div *ngIf="submitted && f.MobileNumber.errors" class="alert-light">
+              <div *ngIf="f.MobileNumber.errors.required">Mobile Number must be a valid</div>
+              <div *ngIf="f.MobileNumber.errors.number">Mobile Number must be a valid</div>
+            </div>
           </div>
           <div class="form-group">
             <div class="row">
@@ -65,32 +60,32 @@
               <div class="col-6">
                 <input type="text" class="form-control" data-toggle="tooltip" title="Enter document number"
                   data-placement="bottom" formControlName="idnumber" placeholder="Id number">
-                  <div *ngIf="submitted && f.idnumber.errors" class="alert-light">
-                    <div *ngIf="f.idnumber.errors.required">KYC Number is required</div>
-                    <div *ngIf="f.idnumber.errors.text">KYC Number must be a valid</div>
-                  </div>
+                <div *ngIf="submitted && f.idnumber.errors" class="alert-light">
+                  <div *ngIf="f.idnumber.errors.required">KYC Number is required</div>
+                  <div *ngIf="f.idnumber.errors.text">KYC Number must be a valid</div>
+                </div>
               </div>
             </div>
           </div>
           <div class="form-group">
             <div class="row">
-            <div class="col-6 text-right align-items-center">
-              <span>Seats: </span>
-            </div>
-            <div class="col-6" data-toggle="tooltip" title="Add number of seats" data-placement="bottom">
-              <div class="number-input">
-                <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="minus"></button>
-                <input class="quantity" id="myInput" formControlName="Quantity" type="number">
-                <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
+              <div class="col-6 text-right align-items-center">
+                <span>Seats: </span>
               </div>
-            </div>
+              <div class="col-6" data-toggle="tooltip" title="Add number of seats" data-placement="bottom">
+                <div class="number-input">
+                  <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
+                    class="minus"></button>
+                  <input class="quantity" id="myInput" formControlName="Quantity" type="number">
+                  <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
+                </div>
+              </div>
             </div>
           </div>
           <hr>
           <div class="form-group" style="text-align: center;">
             <input type="submit" data-toggle="tooltip" title="Click to book event ticket" data-placement="bottom"
-              (click)="generateQRCode()"  value="Book now"
-              class="btn btn-primary py-3 px-4">
+              (click)="generateQRCode()" value="Book now" class="btn btn-primary py-3 px-4">
           </div>
         </form>
       </div>
@@ -112,93 +107,58 @@
           </div>
         </div>
       </div>
-      
+
     </div>
   </div>
 </section>
 
-<!-- <div class="homepage-next-events">
-  <div class="container">
-      <div class="row">
-          <div class="next-events-section-header">
-              <h2 class="entry-title">Our next events</h2>
-              <p>Vestibulum eget lacus at mauris sagittis varius. Etiam ut venenatis dui. Nullam tellus risus, pellentesque at facilisis et, scelerisque sit amet metus. Duis vel semper turpis, ac tempus libero. Maecenas id ultrices risus. Aenean nec ornare ipsum, lacinia.</p>
-          </div>
-      </div>
-
-      <div class="row">
-          <div class="col-12 col-sm-6 col-md-4">
-              <div class="next-event-wrap">
-                  <figure>
-                      <a href="#"><img src="../../../assets/images/header-bg.jpg" alt="1"></a>
-
-                      <div class="event-rating">8.9</div>
-                  </figure>
-
-                  <header class="entry-header">
-                      <h3 class="entry-title">U2 Concert in Detroitt</h3>
-
-                      <div class="posted-date">Saturday <span>Jan 27, 2020</span></div>
-                  </header>
-
-                  <div class="entry-content">
-                      <p>Vestibulum eget lacus at mauris sagittis varius. Etiam ut venenatis dui. Nullam tellus risus.</p>
-                  </div>
-
-                  <footer class="entry-footer">
-                      <input type="submit" value="Buy Tikets" class="btn btn-primary py-3 ">
-                  </footer>
-              </div>
-          </div>
-
-          <div class="col-12 col-sm-6 col-md-4">
-              <div class="next-event-wrap">
-                  <figure>
-                      <a href="#"><img src="../../../assets/images/header-bg.jpg" alt="1"></a>
-
-                      <div class="event-rating">7.9</div>
-                  </figure>
-
-                  <header class="entry-header">
-                      <h3 class="entry-title">TED Talk California</h3>
-
-                      <div class="posted-date">Saturday <span>Jan 27, 2020</span></div>
-                  </header>
-
-                  <div class="entry-content">
-                      <p>Eget lacus at mauris sagittis varius. Etiam ut ven enatis dui. Nullam tellus risus, pellentesque.</p>
-                  </div>
-
-                  <footer class="entry-footer">
-                    <input type="submit" value="Buy Tikets" class="btn btn-primary py-3 ">
-                  </footer>
-              </div>
-          </div>
-
-          <div class="col-12 col-sm-6 col-md-4">
-              <div class="next-event-wrap">
-                  <figure>
-                      <a href="#"><img src="../../../assets/images/header-bg.jpg" alt="1"></a>
-
-                      <div class="event-rating">9.9</div>
-                  </figure>
-
-                  <header class="entry-header">
-                      <h3 class="entry-title">Ultra Music Miami</h3>
-
-                      <div class="posted-date">Saturday <span>Jan 27, 2020</span></div>
-                  </header>
-
-                  <div class="entry-content">
-                      <p>Lacus at mauris sagittis varius. Etiam ut venenatis dui. Nullam tellus risus, pellentesque at facili.</p>
-                  </div>
-
-                  <footer class="entry-footer">
-                    <input type="submit" value="Buy Tikets" class="btn btn-primary py-3 ">
-                  </footer>
-              </div>
-          </div>
-      </div>
+<div class="container"  style="margin-top: 20px;margin-bottom: 20px;">
+  <div id="ad" style="width:100%;height:90px;">
+    <iframe src="http://matthewjamestaylor.com/responsive-ads/ad.html" border="0" scrolling="no"
+      allowtransparency="true" width="100%" height="100%" style="border:0;">
+    </iframe>
   </div>
-</div> -->
+</div>
 
+<section class="pb100" style="margin-top: 20px;">
+  <div class="container">
+    <div class="table-responsive">
+      <table class="event_calender table">
+        <thead class="event_title">
+          <tr>
+            <th colspan="5">
+              <i class="ion-ios-calendar-outline"></i>
+              <span>next events calendar</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let event of alleventData">
+            <td>
+              <img src="../../../assets/images/newsletter-bg.jpg" alt="event">
+            </td>
+            <td class="event_date">
+              {{ event.startDate | date:'dd' }}
+              <span> {{ event.startDate | date:'MMMM yyyy' }}</span>
+            </td>
+            <td>
+              <div class="event_place">
+                <h5>{{ event.title }}
+                  <span>
+                    {{ event.eventDescription }}
+                  </span>
+                </h5>
+                <h6>{{ event.startDate | date:'EEE MMM dd yyyy hh:mm a' }} &nbsp;<b> -
+                  </b>&nbsp; {{ event.endDate | date:'EEE MMM dd yyyy hh:mm a' }}</h6>
+                <p>{{ event.address }}</p>
+              </div>
+            </td>
+            <td>
+              <a (click)="registerForEvent(event)" class="btn btn-primary btn-rounded">Book Ticket</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
