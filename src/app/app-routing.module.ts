@@ -4,8 +4,6 @@ import { HomeComponent } from './pages/home/home.component';
 import { AboutComponent } from './pages/about/about.component';
 import { EventsComponent } from './pages/events/events.component';
 import { ContactusComponent } from './pages/contactus/contactus.component';
-import { ProfileComponent } from './pages/profile/profile.component';
-import { SettingsComponent } from './pages/settings/settings.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { PrivacypolicyComponent } from './pages/privacypolicy/privacypolicy.component';
 import { TermsconditionComponent } from './pages/termscondition/termscondition.component';
@@ -19,8 +17,8 @@ const routes: Routes =
   { path: 'events', component: EventsComponent },
   { path: 'about', component: AboutComponent },
   { path: 'contact', component: ContactusComponent },
-  { path: 'termscondition', component: TermsconditionComponent },
-  { path: 'privacypolicy', component: PrivacypolicyComponent },
+  { path: 'termscondition', component: TermsconditionComponent, pathMatch: 'full' },
+  { path: 'privacypolicy', component: PrivacypolicyComponent, pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }
 ];
 
