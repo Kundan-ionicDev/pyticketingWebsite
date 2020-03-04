@@ -21,6 +21,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PhoneMaskDirective } from './PhoneMaskDirective'; 
 import { PrivacypolicyComponent } from './pages/privacypolicy/privacypolicy.component';
 import { TermsconditionComponent } from './pages/termscondition/termscondition.component';
+// import { JwSocialButtonsModule } from 'jw-angular-social-buttons';
+
+import { FbLikeComponent } from '../../src/app/components/fb-like.component';
+import { GooglePlusComponent } from '../../src/app/components/google-plus.component';
+import { TweetComponent } from '../../src/app/components/tweet.component';
+import { LinkedInShareComponent } from '../../src/app/components/linkedin-share.component';
+import { PinItComponent } from '../../src/app/components/pin-it.component';
+import { CeiboShare } from 'ng2-social-share';
+// import { ShareButtonsModule } from '@ngx-share/buttons';
 
 @NgModule({
   declarations: [
@@ -38,13 +47,18 @@ import { TermsconditionComponent } from './pages/termscondition/termscondition.c
     RegisterEventDialog,
     PhoneMaskDirective,
     TermsconditionComponent,
-    PrivacypolicyComponent
+    PrivacypolicyComponent,
+    FbLikeComponent,
+    GooglePlusComponent,
+    TweetComponent,
+    LinkedInShareComponent,
+    PinItComponent,
+    CeiboShare
   ],
 
   entryComponents: [
     EventTicketDialog,RegisterEventDialog
   ],
-
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -53,7 +67,12 @@ import { TermsconditionComponent } from './pages/termscondition/termscondition.c
     FormsModule,
     ReactiveFormsModule,
     MatDialogModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    //CeiboShare
+    // JwSocialButtonsModule
+    // ShareButtonsModule.withConfig({
+    //   debug: true
+    // })
   ],
   providers: [],
   bootstrap: [AppComponent]

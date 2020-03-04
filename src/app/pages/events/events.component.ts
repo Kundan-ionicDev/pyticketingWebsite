@@ -1,4 +1,4 @@
-import { Component,OnInit,Inject } from '@angular/core';
+import { Component,OnInit,Inject, Input } from '@angular/core';
 import {  Router, ActivatedRoute,ParamMap } from '@angular/router';
 import { switchMap, map, filter, catchError } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
@@ -7,6 +7,32 @@ import { FormGroup, FormControl,Validators } from '@angular/forms';
 import htmlToImage from 'html-to-image';
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 declare var $: any;
+import { CeiboShare } from 'ng2-social-share';
+
+export declare class FacebookParams {
+  u: string;
+}
+
+export class GooglePlusParams {
+  url: string
+}
+
+export class LinkedinParams {
+  url:string
+}
+
+export declare class PinterestParams {
+  url: string;
+  media: string;
+  description: string;
+}
+
+export class TwitterParams {
+  text: string;
+  url: string;
+  hashtags: string;
+  via: string;
+}
 
 @Component({
   selector: 'app-events',
@@ -14,6 +40,13 @@ declare var $: any;
   styleUrls: ['./events.component.css']
 })
 export class EventsComponent implements OnInit {
+  @Input() url = location.href;
+  
+  //vars used only for example, put anything you want :)
+  public repoUrl = 'https://github.com/Epotignano/ng2-social-share';
+  public imageUrl = 'https://avatars2.githubusercontent.com/u/10674541?v=3&s=200';
+
+
   qrcodename: string = "http://ramdeshdev.com/event";
   title = 'generate-qrcode';
   elementType: 'url' | 'canvas' | 'img' = 'url';
@@ -40,8 +73,34 @@ export class EventsComponent implements OnInit {
         this.id = params.get("id");
       });
       this.initialize(this.id);
+       // initialise facebook sdk after it loads if required
+       if (!window['fbAsyncInit']) {
+        window['fbAsyncInit'] = function () {
+            window['FB'].init({
+                appId: 'your-app-id',
+                autoLogAppEvents: true,
+                xfbml: true,
+                version: 'v3.0'
+            });
+        };
+    }
+
+    // load facebook sdk if required
+    const url = 'https://connect.facebook.net/en_US/sdk.js';
+    if (!document.querySelector(`script[src='${url}']`)) {
+        let script = document.createElement('script');
+        script.src = url;
+        document.body.appendChild(script);
+    }
+
+    
       
   }
+
+  ngAfterViewInit(): void {
+    // render facebook button
+    window['FB'] && window['FB'].XFBML.parse();
+  } 
 
   registerForm(){
     this.profileForm = new FormGroup({

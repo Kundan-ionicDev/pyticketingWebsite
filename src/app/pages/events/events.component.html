@@ -1,4 +1,35 @@
 <div class="hero-wrap" style="background-image: url('../../../assets/images/header-bg.jpg');color:#fff;">
+ <div class="jumbotron text-center">
+    <div class="row">
+        <div class="col">
+            <tweet></tweet>
+        </div>
+        <div class="col">
+            <pin-it></pin-it>
+        </div>
+        <div class="col">
+            <google-plus></google-plus>
+        </div>
+        <div class="col">
+            <fb-like></fb-like>
+        </div>
+        <div class="col">
+            <linkedin-share></linkedin-share>
+        </div>
+    </div>
+</div>
+<!--- For this example I am using button, but you can attach the directive to anything you want
+   and it will display the popup for share! :D
+-->
+<button ceiboShare  [facebook]="{u: repoUrl}">Facebook</button>
+<button ceiboShare  [linkedIn]="{url:repoUrl}">Linkedin</button>
+<button ceiboShare  [googlePlus]="{url:repoUrl}">Google Plus</button>
+<button ceiboShare  [twitter]="{url:repoUrl, text:'Checkout this awesome ng2 social share directive', hashtags:'angular2, social, ceiboIT'}">Twitter</button>
+<button ceiboShare [pinterest]="{url:repoUrl, media: imageUrl, description:'Checkout this awesome angular2 directive'}">Pinterest</button>
+
+
+  
+
   <div class="overlay"></div>
   <div class="container">
     <div class="row no-gutters slider-text align-items-center justify-content-start">
